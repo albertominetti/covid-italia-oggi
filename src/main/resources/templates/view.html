@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Coviddi</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css} "/>
+</head>
+<body>
+
+<h3 class="text-center" th:text="'Report di '+ ${#temporals.format(day, 'EEEE dd MMM yyyy')}"></h3>
+<p class="text-center" th:each="graph: ${graphs}">
+    <img width="95%" th:src="${graph}">
+</p>
+
+
+<script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
