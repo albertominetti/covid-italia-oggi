@@ -40,6 +40,8 @@ public class ViewService {
     @Data
     public static class GraphsHolder {
         private final LocalDate day;
+
+        // TODO Use hateoas
         private List<String> graphs = emptyList();
     }
 }

@@ -18,10 +18,21 @@ import static org.apache.commons.io.IOUtils.resourceToString;
 @Service
 public class CovidGraphsGenerator {
 
-    public GraphResult createLatestGraphs() throws IOException {
+    public static final String PLOT_NATIONAL = "/plot_national.R";
+    public static final String PLOT_REGIONS = "/plot_regions.R";
+
+    public GraphResult createLatestNationalGraphs() throws IOException {
+        return this.createGraphs(PLOT_NATIONAL);
+    }
+
+    public GraphResult createLatestRegionalGraphs() throws IOException {
+        return this.createGraphs(PLOT_REGIONS);
+    }
+
+    private GraphResult createGraphs(String rScript) throws IOException {
         log.info("Running");
         long start = System.currentTimeMillis();
-        String rSource = resourceToString("/covid_analysis_ggplot.R", UTF_8);
+        String rSource = resourceToString(rScript, UTF_8);
         RCode code = RCode.create();
         code.addRCode(rSource);
         RCaller caller = RCaller.create(code, RCallerOptions.create());

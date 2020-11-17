@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.http.HttpStatus.FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
-@Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = ApplicationIT.SmokeConfig.class)
 class ApplicationIT {
