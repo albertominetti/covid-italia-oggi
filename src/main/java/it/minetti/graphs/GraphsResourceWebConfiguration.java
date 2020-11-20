@@ -1,4 +1,4 @@
-package it.minetti.config;
+package it.minetti.graphs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,17 +16,18 @@ import static java.nio.file.Files.notExists;
 public class GraphsResourceWebConfiguration implements WebMvcConfigurer {
 
     public static final String GRAPHS_DIR_NAME = "graphs";
-    public static final Path GRAPHS_DIR = Paths.get(GRAPHS_DIR_NAME);
+    public static final String GRAPHS_DIR_URI = "file:" + GRAPHS_DIR_NAME;
+    public static final Path GRAPH_DIR = Paths.get(GRAPHS_DIR_NAME);
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/" + GRAPHS_DIR_NAME + "/**").addResourceLocations("file:" + GRAPHS_DIR_NAME + "/");
+        registry.addResourceHandler("/" + GRAPHS_DIR_NAME + "/**").addResourceLocations(GRAPHS_DIR_URI + "/");
     }
 
     @PostConstruct
     public void setUp() throws IOException {
-        if (notExists(GRAPHS_DIR)) {
-            createDirectory(GRAPHS_DIR);
+        if (notExists(GRAPH_DIR)) {
+            createDirectory(GRAPH_DIR);
         }
     }
 }

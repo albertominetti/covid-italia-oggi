@@ -1,7 +1,8 @@
 package it.minetti;
 
 import it.minetti.CovidGraphsGenerator.GraphResult;
-import it.minetti.ViewService.GraphsHolder;
+import it.minetti.graphs.GraphsService;
+import it.minetti.graphs.GraphsService.GraphsHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,11 +16,11 @@ public class BackendController {
     @Autowired
     private CovidGraphsGenerator generator;
     @Autowired
-    private ViewService viewService;
+    private GraphsService graphsService;
 
     @GetMapping(value = "/")
     public ModelAndView method() {
-        return new ModelAndView("redirect:/actuator/health/");
+        return new ModelAndView("redirect:/view-graphs");
     }
 
     @GetMapping(value = "/run")
@@ -34,7 +35,7 @@ public class BackendController {
 
     @GetMapping(value = "/covid-graphs")
     public GraphsHolder graphs() throws IOException {
-        return viewService.retrieveLatestGraphs();
+        return graphsService.retrieveLatestGraphsRes();
     }
 
 }
