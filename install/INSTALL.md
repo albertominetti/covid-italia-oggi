@@ -77,16 +77,19 @@ server {
         auth_basic "Authentication required";
         auth_basic_user_file /etc/nginx/.htpasswd;
         proxy_pass http://localhost:8080/swagger-ui/;
+        proxy_set_header Host $host;
     }
 	
     location /admin/ {
         auth_basic "Authentication required";
         auth_basic_user_file /etc/nginx/.htpasswd;
         proxy_pass http://localhost:8080/admin/;
+        proxy_set_header Host $host;
     }
     
     location / {
         proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
     }
 }
 server {
