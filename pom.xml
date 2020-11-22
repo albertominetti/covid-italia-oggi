@@ -5,7 +5,7 @@
 
     <groupId>it.minetti</groupId>
     <artifactId>covid-italia-oggi</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -169,6 +169,7 @@
                     <execution>
                         <goals>
                             <goal>repackage</goal>
+                            <goal>build-info</goal>
                         </goals>
                     </execution>
                 </executions>
