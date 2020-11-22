@@ -23,19 +23,8 @@ public class BackendController {
     public ModelAndView method() {
         return new ModelAndView("redirect:/view-graphs");
     }
-
-    @GetMapping(value = "/run")
-    public GraphResult run() throws IOException {
-        return generator.createLatestNationalGraphs();
-    }
-
-    @GetMapping(value = "/run-regions")
-    public GraphResult runRegions() throws IOException {
-        return generator.createLatestRegionalGraphs();
-    }
-
-    @GetMapping(value = "/covid-graphs")
-    public GraphsHolder graphs() throws IOException {
+    @GetMapping(value = "/graphs-api")
+    public GraphsHolder graphsApi() throws IOException {
         return localGraphsService.retrieveLatestGraphsRes();
     }
 

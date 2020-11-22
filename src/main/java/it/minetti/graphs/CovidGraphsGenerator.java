@@ -62,7 +62,7 @@ public class CovidGraphsGenerator {
         }
     }
 
-    private GraphResult createLatestGraphs() throws IOException {
+    public GraphResult createLatestGraphs() throws IOException {
         GraphResult nationalGraphs = createLatestNationalGraphs();
         GraphResult regionalGraphs = createLatestRegionalGraphs();
 
