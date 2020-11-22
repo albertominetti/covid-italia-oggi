@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static it.minetti.graphs.GraphsResourceWebConfiguration.GRAPHS_DIR_NAME;
@@ -23,19 +24,21 @@ import static java.util.Collections.emptyList;
 
 @Slf4j
 @Service
-public class GraphsService {
+public class LocalGraphsService {
 
     private final ResourcePatternResolver resolver =
-            new PathMatchingResourcePatternResolver(GraphsService.class.getClassLoader());
+            new PathMatchingResourcePatternResolver(LocalGraphsService.class.getClassLoader());
+
+    public Optional<LocalDate> retrieveLatestCalculatedDay() throws IOException {
+        return retrieveLatestDayDirectory().map(LocalDate::parse);
+    }
 
     public GraphsHolder retrieveLatestGraphsRes() throws IOException {
-        Resource[] dayResources = resolver.getResources(GRAPHS_DIR_URI + "/*");
-        String lastDayDirectory = Arrays.stream(dayResources)
-                .map(Resource::getFilename)
-                .filter(StringUtils::isNotBlank)
-                .max(String::compareTo)
-                .orElseThrow(() -> new IllegalArgumentException("No graph is still present"));
-        return retrieveGraphsForTheDay(lastDayDirectory);
+        Optional<String> latestDayDirectory = retrieveLatestDayDirectory();
+        if (latestDayDirectory.isEmpty()) {
+            throw new IllegalArgumentException("No graph is still present");
+        }
+        return retrieveGraphsForTheDay(latestDayDirectory.get());
     }
 
     private GraphsHolder retrieveGraphsForTheDay(String lastDayDirectory) throws IOException {
@@ -48,6 +51,14 @@ public class GraphsService {
                 .map(z -> baseUrl + "/" + GRAPHS_DIR_NAME + "/" + lastDayDirectory + "/" + z)
                 .collect(Collectors.toList());
         return new GraphsHolder(LocalDate.parse(lastDayDirectory), lastDayGraphs);
+    }
+
+    public Optional<String> retrieveLatestDayDirectory() throws IOException {
+        Resource[] dayResources = resolver.getResources(GRAPHS_DIR_URI + "/*");
+        return Arrays.stream(dayResources)
+                .map(Resource::getFilename)
+                .filter(StringUtils::isNotBlank)
+                .max(String::compareTo);
     }
 
     @Data

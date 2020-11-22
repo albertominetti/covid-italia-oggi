@@ -1,7 +1,7 @@
 package it.minetti;
 
-import it.minetti.graphs.GraphsService;
-import it.minetti.graphs.GraphsService.GraphsHolder;
+import it.minetti.graphs.LocalGraphsService;
+import it.minetti.graphs.LocalGraphsService.GraphsHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +13,11 @@ import java.io.IOException;
 public class ViewController {
 
     @Autowired
-    private GraphsService graphsService;
+    private LocalGraphsService localGraphsService;
 
     @GetMapping("/view-graphs")
     public String graphs(Model model) throws IOException {
-        GraphsHolder graphsHolder = graphsService.retrieveLatestGraphsRes();
+        GraphsHolder graphsHolder = localGraphsService.retrieveLatestGraphsRes();
 
         model.addAttribute("day", graphsHolder.getDay());
         model.addAttribute("graphs", graphsHolder.getUrls());

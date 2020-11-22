@@ -1,6 +1,6 @@
 package it.minetti;
 
-import it.minetti.graphs.GraphsService.GraphsHolder;
+import it.minetti.graphs.LocalGraphsService.GraphsHolder;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,8 +29,8 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.http.HttpStatus.OK;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(classes = GraphsServiceIT.SmokeConfig.class)
-class GraphsServiceIT {
+@ContextConfiguration(classes = LocalGraphsServiceIT.SmokeConfig.class)
+class LocalGraphsServiceIT {
 
     @Autowired
     TestRestTemplate template;

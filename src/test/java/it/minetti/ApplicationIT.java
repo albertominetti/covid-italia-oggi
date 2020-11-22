@@ -1,7 +1,7 @@
 package it.minetti;
 
-import it.minetti.graphs.GraphsService;
-import it.minetti.graphs.GraphsService.GraphsHolder;
+import it.minetti.graphs.LocalGraphsService;
+import it.minetti.graphs.LocalGraphsService.GraphsHolder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,11 +33,11 @@ class ApplicationIT {
     private int port;
 
     @MockBean
-    GraphsService graphsService;
+    LocalGraphsService localGraphsService;
 
     @Test
     void contextLoad() throws IOException {
-        when(graphsService.retrieveLatestGraphsRes()).thenReturn(new GraphsHolder());
+        when(localGraphsService.retrieveLatestGraphsRes()).thenReturn(new GraphsHolder());
 
         ResponseEntity<String> entity = template.getForEntity("http://localhost:{port}/", String.class, port);
         assertThat(entity, is(not(nullValue())));
@@ -46,7 +46,7 @@ class ApplicationIT {
 
     @Test
     void health() throws IOException {
-        when(graphsService.retrieveLatestGraphsRes()).thenReturn(new GraphsHolder());
+        when(localGraphsService.retrieveLatestGraphsRes()).thenReturn(new GraphsHolder());
 
         ResponseEntity<String> entity = template.getForEntity("http://localhost:{port}/actuator/health", String.class, port);
         assertThat(entity, is(not(nullValue())));
