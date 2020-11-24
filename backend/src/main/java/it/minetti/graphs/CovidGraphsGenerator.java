@@ -32,7 +32,6 @@ public class CovidGraphsGenerator {
     @Autowired
     private RemoteCsvExtractor remoteCsvExtractor;
 
-
     @Scheduled(cron = "0 55 17 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 00 18 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 10 18 * * ?", zone = "Europe/Rome")
@@ -103,7 +102,7 @@ public class CovidGraphsGenerator {
     @Data
     @AllArgsConstructor
     public static class GraphResult {
-        private String status = "ok";
+        private String status;
         private Duration time;
         private String lastDay;
     }
