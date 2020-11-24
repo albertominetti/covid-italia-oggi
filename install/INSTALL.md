@@ -193,6 +193,10 @@ You can check the rotation of the logs using `logrotate -d /etc/logrotate.d/app`
 
 Note: if you are interested to a centralized logging solution with Spring Boot you take a look here: https://github.com/albertominetti/java-discovery
 
+#### TODO papertrail
+#### TODO tcpwrapper
+#### TODO automated deploy when new artifact on github or new push in a branch
+
 Credits:
 * https://fowlie.github.io/2017/08/24/deploy-spring-boot-on-digitialocean/
 * https://itectec.com/ubuntu/ubuntu-how-to-configure-logrotate-without-having-etc-logrotate-d-rsyslog/
