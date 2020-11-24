@@ -23,7 +23,6 @@ public class RemoteCsvExtractor {
     @Value("${pcm-dpc.url}")
     private String url;
 
-
     public LocalDate retrieveLastDayInCsv() {
         String rawCsv = restTemplate.getForObject(url, String.class);
         if (rawCsv == null) {
@@ -33,6 +32,7 @@ public class RemoteCsvExtractor {
         List<String[]> lines;
         try (Reader inputReader = new StringReader(rawCsv)) {
             CsvParserSettings settings = new CsvParserSettings();
+            settings.setLineSeparatorDetectionEnabled(true);
             CsvParser parser = new CsvParser(settings);
             // no need to parse into objects, we only need the last row
             lines = parser.parseAll(inputReader);
@@ -42,10 +42,10 @@ public class RemoteCsvExtractor {
 
         String[] lastLine = lines.stream()
                 .reduce((first, second) -> second).orElseThrow(
-                        () -> new IllegalArgumentException("Impossible to find last line in the csv provide.")
+                        () -> new IllegalArgumentException("Impossible to find last line in the csv provided.")
                 );
 
-        if (lastLine.length < 1) {
+        if (lastLine.length <= 1) {
             throw new IllegalArgumentException("Empty data from the csv.");
         }
 
