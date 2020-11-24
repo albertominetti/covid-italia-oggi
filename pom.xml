@@ -10,6 +10,7 @@
     <modules>
         <module>frontend</module>
         <module>backend</module>
+        <module>dist</module>
     </modules>
 
     <packaging>pom</packaging>
