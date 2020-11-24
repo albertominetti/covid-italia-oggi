@@ -10,6 +10,7 @@ module.exports = {
                 ws: true,
                 changeOrigin: true
             }
-        }
+        },
+        port: 8081,
     },
 }
