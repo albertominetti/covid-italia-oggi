@@ -10,15 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 @RestController
-public class BackendController {
+public class BackendApiController {
 
     @Autowired
     private LocalGraphsService localGraphsService;
-
-    @GetMapping(value = "/")
-    public ModelAndView method() {
-        return new ModelAndView("redirect:/view-graphs");
-    }
 
     @GetMapping(value = "/api/graphs")
     public GraphsHolder graphsApi() throws IOException {
