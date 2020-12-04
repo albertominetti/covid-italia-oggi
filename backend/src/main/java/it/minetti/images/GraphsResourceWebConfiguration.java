@@ -1,4 +1,4 @@
-package it.minetti.graphs;
+package it.minetti.images;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

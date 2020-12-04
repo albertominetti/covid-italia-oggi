@@ -1,8 +1,10 @@
-package it.minetti.graphs;
+package it.minetti.images.r;
 
 import com.github.rcaller.rstuff.RCaller;
 import com.github.rcaller.rstuff.RCallerOptions;
 import com.github.rcaller.rstuff.RCode;
+import it.minetti.images.LocalGraphsService;
+import it.minetti.pcmdpc.RemoteCsvExtractor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -26,17 +28,19 @@ public class CovidGraphsGenerator {
     public static final String PLOT_NATIONAL = "/plot_national.R";
     public static final String PLOT_REGIONS = "/plot_regions.R";
 
-    @Autowired
-    private LocalGraphsService localGraphsService;
+    private final LocalGraphsService localGraphsService;
+    private final RemoteCsvExtractor remoteCsvExtractor;
 
-    @Autowired
-    private RemoteCsvExtractor remoteCsvExtractor;
+    public CovidGraphsGenerator(LocalGraphsService localGraphsService, RemoteCsvExtractor remoteCsvExtractor) {
+        this.localGraphsService = localGraphsService;
+        this.remoteCsvExtractor = remoteCsvExtractor;
+    }
 
     @Scheduled(cron = "0 55 17 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 00 18 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 10 18 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 15 19 * * ?", zone = "Europe/Rome")
-    public GraphResult runIfNewData() throws IOException {
+    public GraphsGenerationResult runIfNewData() throws IOException {
         Optional<LocalDate> optionalLastDayOfCalculation = localGraphsService.retrieveLatestCalculatedDay();
         if (optionalLastDayOfCalculation.isEmpty()) {
             log.warn("No graph has ever been calculated since now, seems it is the first time.");
@@ -46,7 +50,7 @@ public class CovidGraphsGenerator {
             if (lastDayOfCalculation.isEqual(LocalDate.now())) {
                 // the data for the day are published within the day
                 log.warn("No needs to create the new graphs since they are updated to {}.", lastDayOfCalculation);
-                return new GraphResult("ok", Duration.ZERO, lastDayOfCalculation.toString());
+                return new GraphsGenerationResult("ok", Duration.ZERO, lastDayOfCalculation.toString());
             }
 
             LocalDate lastDayFromCsv = remoteCsvExtractor.retrieveLastDayInCsv();
@@ -55,15 +59,15 @@ public class CovidGraphsGenerator {
                 return createLatestGraphs();
             } else {
                 log.warn("There are no data till now for the current day, wait for it and run manually or wait for the next run.");
-                return new GraphResult("no", Duration.ZERO, null);
+                return new GraphsGenerationResult("no", Duration.ZERO, null);
             }
 
         }
     }
 
-    public GraphResult createLatestGraphs() throws IOException {
-        GraphResult nationalGraphs = createLatestNationalGraphs();
-        GraphResult regionalGraphs = createLatestRegionalGraphs();
+    public GraphsGenerationResult createLatestGraphs() throws IOException {
+        GraphsGenerationResult nationalGraphs = createLatestNationalGraphs();
+        GraphsGenerationResult regionalGraphs = createLatestRegionalGraphs();
 
         Duration totalTime = nationalGraphs.getTime().plus(regionalGraphs.getTime());
 
@@ -73,18 +77,18 @@ public class CovidGraphsGenerator {
         }
 
         log.info("New graphs have been created with national and regional data.");
-        return new GraphResult("ok", totalTime, nationalGraphs.getLastDay());
+        return new GraphsGenerationResult("ok", totalTime, nationalGraphs.getLastDay());
     }
 
-    public GraphResult createLatestNationalGraphs() throws IOException {
+    public GraphsGenerationResult createLatestNationalGraphs() throws IOException {
         return this.createGraphs(PLOT_NATIONAL);
     }
 
-    public GraphResult createLatestRegionalGraphs() throws IOException {
+    public GraphsGenerationResult createLatestRegionalGraphs() throws IOException {
         return this.createGraphs(PLOT_REGIONS);
     }
 
-    private GraphResult createGraphs(String rScript) throws IOException {
+    private GraphsGenerationResult createGraphs(String rScript) throws IOException {
         log.info("Running {}", rScript);
         long start = System.currentTimeMillis();
         String rSource = resourceToString(rScript, UTF_8);
@@ -96,12 +100,12 @@ public class CovidGraphsGenerator {
         long stop = System.currentTimeMillis();
         long totalTime = stop - start;
         log.info("Graphs creation took: {}ms", totalTime);
-        return new GraphResult("ok", Duration.ofMillis(totalTime), lastDay);
+        return new GraphsGenerationResult("ok", Duration.ofMillis(totalTime), lastDay);
     }
 
     @Data
     @AllArgsConstructor
-    public static class GraphResult {
+    public static class GraphsGenerationResult {
         private String status;
         private Duration time;
         private String lastDay;
