@@ -1,6 +1,6 @@
 package it.minetti;
 
-import it.minetti.graphs.LocalGraphsService.GraphsHolder;
+import it.minetti.images.LocalGraphsService.GraphsHolder;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,7 +53,7 @@ class LocalGraphsServiceIT {
         Files.write(todayGraphFolder.resolve("sample1.png"), sampleImageBytes, TRUNCATE_EXISTING, CREATE);
         Files.write(todayGraphFolder.resolve("sample2.png"), sampleImageBytes, TRUNCATE_EXISTING, CREATE);
 
-        ResponseEntity<GraphsHolder> entity = template.getForEntity("http://localhost:{port}/api/graphs", GraphsHolder.class, port);
+        ResponseEntity<GraphsHolder> entity = template.getForEntity("http://localhost:{port}/api/images", GraphsHolder.class, port);
         assertThat(entity, is(not(nullValue())));
         assertThat(entity.getStatusCode(), is(OK));
         GraphsHolder body = entity.getBody();

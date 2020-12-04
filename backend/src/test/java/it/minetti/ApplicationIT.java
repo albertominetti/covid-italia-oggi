@@ -1,7 +1,7 @@
 package it.minetti;
 
-import it.minetti.graphs.LocalGraphsService;
-import it.minetti.graphs.LocalGraphsService.GraphsHolder;
+import it.minetti.images.LocalGraphsService;
+import it.minetti.images.LocalGraphsService.GraphsHolder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
