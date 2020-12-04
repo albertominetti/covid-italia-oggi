@@ -1,4 +1,4 @@
-package it.minetti.graphs;
+package it.minetti.images.r;
 
 import com.github.rcaller.rstuff.RCaller;
 import com.github.rcaller.rstuff.RCallerOptions;

@@ -1,4 +1,4 @@
-package it.minetti.graphs;
+package it.minetti.images;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static it.minetti.graphs.GraphsResourceWebConfiguration.GRAPHS_DIR_NAME;
-import static it.minetti.graphs.GraphsResourceWebConfiguration.GRAPHS_DIR_URI;
+import static it.minetti.images.GraphsResourceWebConfiguration.GRAPHS_DIR_NAME;
+import static it.minetti.images.GraphsResourceWebConfiguration.GRAPHS_DIR_URI;
 import static java.util.Collections.emptyList;
 
 @Slf4j
