@@ -1,4 +1,4 @@
-package it.minetti.graphs;
+package it.minetti.pcmdpc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,14 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class CovidCsvHealthIndicator implements HealthIndicator {
 
-    @Value("${pcm-dpc.url}")
+    @Value("${pcm-dpc.url}") // TODO move in constructor
     private String url;
 
-    @Autowired
-    RestTemplate template;
+    private final RestTemplate template;
+
+    public CovidCsvHealthIndicator(RestTemplate template) {
+        this.template = template;
+    }
 
     @Override
     public Health health() {
