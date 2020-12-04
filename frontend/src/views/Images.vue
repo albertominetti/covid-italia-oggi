@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h1>
-            <span v-if="day != null">{{day | moment}}</span>
-            <span v-else>... loading ...</span>
-        </h1>
+        <h2 v-if="day != null">{{day | moment}}</h2>
+        <div v-else class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
         <graph-image v-for="u in urls" :key="u" :url="u"></graph-image>
     </div>
 </template>
@@ -20,11 +20,11 @@
         },
         filters: {
             moment(date: string) {
-                return moment(date).format('dddd DD MMMM yyyy');
+                return moment(date).format('dddd DD MMMM');
             }
         }
     })
-    export default class ImagesDashboard extends Vue {
+    export default class Images extends Vue {
         private errors: string[] = []; // TODO exception handling
         private day: string | null = null;
         private urls: string[] | null = null;
@@ -34,7 +34,7 @@
         }
 
         public loadImageUrls() {
-            AXIOS.get(`api/graphs`)
+            AXIOS.get(`api/images`)
                 .then(response => {
                     this.day = response.data.day
                     this.urls = response.data.urls

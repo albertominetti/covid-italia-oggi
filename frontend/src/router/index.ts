@@ -20,8 +20,8 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/images',
-    name: 'ImagesDashboard',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ImagesDashboard.vue'),
+    name: 'Images',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Images.vue'),
   }
 ]
 
