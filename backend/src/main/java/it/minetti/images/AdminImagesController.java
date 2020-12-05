@@ -2,20 +2,19 @@ package it.minetti.images;
 
 import it.minetti.images.r.CovidGraphsGenerator;
 import it.minetti.images.r.CovidGraphsGenerator.GraphsGenerationResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@RestController()
+@RestController
 @RequestMapping(value = "/admin")
-public class AdminController {
+public class AdminImagesController {
 
     private final CovidGraphsGenerator generator;
 
-    public AdminController(CovidGraphsGenerator generator) {
+    public AdminImagesController(CovidGraphsGenerator generator) {
         this.generator = generator;
     }
 
@@ -33,6 +32,4 @@ public class AdminController {
     public GraphsGenerationResult runRegional() throws IOException {
         return generator.createLatestRegionalGraphs();
     }
-
-
 }
