@@ -1,14 +1,17 @@
 package it.minetti.data;
 
 import it.minetti.pcmdpc.RemoteCsvExtractor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class CsvDataMapper {
 
     public DataModel map(List<RemoteCsvExtractor.CsvRow> rows) {
+        log.info("Mapping {} data rows...", rows.size());
         RemoteCsvExtractor.CsvRow first = rows.get(0);
 
         DataModel dataModel = new DataModel(first.getDate(), rows.size());
@@ -22,6 +25,7 @@ public class CsvDataMapper {
             previous = row;
         }
 
+        log.info("Mapped {} data rows.", rows.size());
         return dataModel;
     }
 }

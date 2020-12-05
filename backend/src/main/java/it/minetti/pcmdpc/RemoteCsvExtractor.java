@@ -1,18 +1,16 @@
 package it.minetti.pcmdpc;
 
 import com.univocity.parsers.annotations.Convert;
-import com.univocity.parsers.annotations.Format;
 import com.univocity.parsers.annotations.Parsed;
 import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.conversions.Conversion;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import springfox.documentation.annotations.Cacheable;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -20,9 +18,9 @@ import java.io.StringReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 public class RemoteCsvExtractor {
 
@@ -67,6 +65,7 @@ public class RemoteCsvExtractor {
     }
 
     public List<CsvRow> retrieveLastData() {
+        log.info("Retrieving latest national data...");
         String rawCsv = restTemplate.getForObject(url, String.class);
         if (rawCsv == null) {
             throw new IllegalArgumentException("Cannot retrieve data from source.");
@@ -83,8 +82,10 @@ public class RemoteCsvExtractor {
             // no need to parse into objects, we only need the last row
             parser.parse(inputReader);
 
+            log.debug("Latest data retrieved.");
             return rowProcessor.getBeans();
         } catch (IOException e) {
+            log.error("Something went wrong when retrieving the latest data", e);
             throw new IllegalArgumentException(e);
         }
     }

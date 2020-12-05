@@ -1,8 +1,6 @@
 package it.minetti.images;
 
-import it.minetti.images.LocalGraphsService;
 import it.minetti.images.LocalGraphsService.GraphsHolder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
