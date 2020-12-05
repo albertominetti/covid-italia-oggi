@@ -1,36 +1,31 @@
 package it.minetti.data;
 
-import it.minetti.pcmdpc.RemoteCsvExtractor;
-import it.minetti.pcmdpc.RemoteCsvExtractor.CsvRow;
+import it.minetti.scheduled.DataSchedulerService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping(value = "/api")
 public class DataApiController {
 
-    private final RemoteCsvExtractor remoteCsvExtractor;
-    private final CsvDataMapper mapper;
 
-    public DataApiController(RemoteCsvExtractor remoteCsvExtractor, CsvDataMapper mapper) {
-        this.remoteCsvExtractor = remoteCsvExtractor;
-        this.mapper = mapper;
+    private final DataRetrieverService service;
+    private final DataSchedulerService scheduler;
+
+    public DataApiController(DataRetrieverService service, DataSchedulerService scheduler) {
+        this.service = service;
+        this.scheduler = scheduler;
     }
 
     @GetMapping(value = "/data")
     public DataModel graphsApi() {
         log.info("Someone requested the latest data...");
         long start = System.currentTimeMillis();
-        List<CsvRow> csvRows = remoteCsvExtractor.retrieveLastData();
-        // TODO cache it
-        DataModel data = mapper.map(csvRows);
+
+        DataModel data = service.retrieveNationalData();
 
         long stop = System.currentTimeMillis();
         long totalTime = stop - start;
