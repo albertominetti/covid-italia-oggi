@@ -6,7 +6,7 @@ The project born as a simple standalone R script to analyze and visualize the mo
 
 The application is currently (November 2020) hosted by DigitalOcean as a Droplet, it is mainly a VPS with ssh and a great support by the platform, it includes monitoring, scaling and many complementary pluggable services. I am expecting to try other cloud providers that allow to run the app for free; it will be an interesting challenge to optimize the app till it can run on the cheapest cloud solution.
 
-[Here](coviddi.ddns.net) the link to the running application. The images that follows show some samples from it.
+[Here](http://coviddi.ddns.net) the link to the running application. The images that follows show some samples from it.
 
 |![home](docs/coviddi-home.png)|
 |:--:| 
