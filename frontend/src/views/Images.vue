@@ -1,10 +1,18 @@
 <template>
     <div>
-        <h2 v-if="day != null">{{day | moment}}</h2>
+        <div v-if="day != null">
+            <h2>{{day | moment}}</h2>
+            <graph-image v-for="u in urls" :key="u" :url="u"></graph-image>
+            <p>
+                I dati provengono da <em>Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</em>
+            </p>
+            <p>
+                Le immagini sono generate giornalmente con <em>R scripting version 3.6.2 (2019-12-12)</em>
+            </p>
+        </div>
         <div v-else class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-        <graph-image v-for="u in urls" :key="u" :url="u"></graph-image>
     </div>
 </template>
 

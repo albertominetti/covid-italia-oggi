@@ -2,28 +2,31 @@
     <div class="home">
         <div v-if="lastDate">
             <h2>{{lastDate | moment}}</h2>
-            <b-container fluid class="bv-example-row">
-                <b-row>
-                    <b-col cols="6">
-                        <apexchart :height="height" :options="getChartOptions('Terapia intensiva', '#9a9419')"
-                                   :series="inIntensiveCare"/>
+            <b-container fluid="fluid" class="p-1">
+                <b-row no-gutters>
+                    <b-col lg="12" xl="6">
+                        <apexchart :options="getChartOptions('Terapia intensiva', '#9a9419')"
+                                   :series="inIntensiveCare" class="chart"/>
                     </b-col>
-                    <b-col cols="6">
-                        <apexchart :height="height" :options="getChartOptions('Deceduti', '#7b1a9c')"
-                                   :series="newDeceased"/>
+                    <b-col lg="12" xl="6">
+                        <apexchart :options="getChartOptions('Deceduti', '#7b1a9c')"
+                                   :series="newDeceased" class="chart"/>
                     </b-col>
                 </b-row>
-                <b-row>
-                    <b-col>
-                        <apexchart :height="height" :options="getChartOptions('Positivi', '#c26310')"
-                                   :series="newPositives"/>
+                <b-row no-gutters>
+                    <b-col lg="12" xl="6">
+                        <apexchart :options="getChartOptions('Nuovi positivi', '#c26310')"
+                                   :series="newPositives" class="chart"/>
                     </b-col>
-                    <b-col>
-                        <apexchart :height="height" :options="getChartOptions('Tamponi', '#12a8d2')"
-                                   :series="newTests"/>
+                    <b-col lg="12" xl="6">
+                        <apexchart :options="getChartOptions('Tamponi', '#12a8d2')"
+                                   :series="newTests" class="chart"/>
                     </b-col>
                 </b-row>
             </b-container>
+            <p>
+                I dati provengono da <em>Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</em>
+            </p>
         </div>
         <div v-else class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
@@ -47,8 +50,10 @@
         }
     })
     export default class Home extends Vue {
-        private height = 450;
+        private height = 400; // TODO useless, please review
         private lastDate: Date | null = null;
+        private checked = false; // TODO useless, please review
+        private static totalPopulation = 60244639; // TODO useless, please review
 
         private inIntensiveCare: ApexAxisChartSeries = [];
         private newDeceased: ApexAxisChartSeries = [];
@@ -65,9 +70,8 @@
                     id: title,
                     group: 'social',
                     type: 'area',
-                    height: 200,
                     animations: {
-                        enabled: false,
+                        enabled: true,
                     },
                     toolbar: {
                         tools: {
@@ -99,7 +103,7 @@
                 },
                 title: {
                     text: title,
-                    align: 'left'
+                    align: 'center'
                 },
                 dataLabels: {
                     enabled: false
@@ -107,7 +111,12 @@
                 colors: [color],
                 yaxis: {
                     labels: {
-                        minWidth: 10
+                        minWidth: 0,
+                        align: 'right',
+                        show: true,
+                        formatter(val: number, opts?: any): string {
+                            return val.toLocaleString(undefined, {useGrouping: true});
+                        }
                     },
                     min: 0,
                     forceNiceScale: true
@@ -118,8 +127,7 @@
                         formatter(val: number, opts?: any): string {
                             return moment(val).format("ddd DD MMMM");
                         }
-                    }
-
+                    },
                 },
                 markers: {
                     size: 0
@@ -158,7 +166,7 @@
                     const startDate = new Date(response.data.startDate);
                     this.inIntensiveCare = this.prepareTimeSeries("Terapia intensiva", startDate, response.data.inIntensiveCare);
                     this.newDeceased = this.prepareTimeSeries("Deceduti", startDate, response.data.newDeceased);
-                    this.newPositives = this.prepareTimeSeries("Positivi", startDate, response.data.newPositives);
+                    this.newPositives = this.prepareTimeSeries("Nuovi Positivi", startDate, response.data.newPositives);
                     this.newTests = this.prepareTimeSeries("Tamponi", startDate, response.data.newTests);
                 })
                 .catch(e => {
