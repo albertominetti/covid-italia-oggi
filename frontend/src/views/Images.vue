@@ -19,7 +19,7 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import GraphImage from '@/components/GraphImage.vue';
-    import {AXIOS} from "@/mixins/http-commons";
+    import {AXIOS} from "@/mixins/http-commons"; // TODO move in http-commons
     import moment from 'moment';
 
     @Component({
