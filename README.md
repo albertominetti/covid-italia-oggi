@@ -37,6 +37,7 @@ In origin was simply R, but it does not provide a production ready web server, s
     - [x] expose in https with a verified certificate
 - [x] integrate a Vue frontend with spring-boot
 - [x] generate interactive graphs with a Vue using data from the underlying API
+- [ ] localization
 - [ ] do not rely on the underlying R, the cloud platform could not provide it anymore
 - [ ] automate the deployment from github to the destination server
 
@@ -56,3 +57,7 @@ To generate the graphs with R you need to query the endpoint [/admin/run](http:/
 
 [Here](install/INSTALL.md) you can find details for the requirements if you are interested to install on your server.
 
+
+## Credits
+
+* Icons made by [Freekpik](https://www.flaticon.com/authors/freepik)
