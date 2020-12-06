@@ -1,15 +1,27 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link>
-            |
-            <router-link to="/images">Images</router-link>
-            |
-            <router-link to="/about">About</router-link>
-        </div>
-        <router-view/>
+        <Push :closeOnNavigation="true" noOverlay>
+            <router-link to="/"><span>Home</span></router-link>
+            <router-link to="/images"><span>Images</span></router-link>
+            <router-link to="/about"><span>About</span></router-link>
+        </Push>
+        <main id="page-wrap">
+            <router-view class="mt-4"/>
+        </main>
     </div>
 </template>
+
+<script lang="ts">
+    import {Push} from 'vue-burger-menu'
+    import {Component, Vue} from "vue-property-decorator";
+
+    @Component({
+        components: {Push}
+    })
+    export default class Home extends Vue {
+
+    }
+</script>
 
 <style>
     #app {
