@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @Slf4j
 @Controller
+@Deprecated
 public class ViewController {
 
     @Autowired
