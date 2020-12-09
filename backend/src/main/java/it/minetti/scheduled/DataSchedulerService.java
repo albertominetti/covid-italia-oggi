@@ -1,8 +1,8 @@
 package it.minetti.scheduled;
 
-import it.minetti.data.DataRetrieverService;
 import it.minetti.images.LocalGraphsService;
 import it.minetti.images.r.CovidGraphsGenerator;
+import it.minetti.pcmdpc.CsvRow;
 import it.minetti.pcmdpc.RemoteCsvExtractor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,17 +17,14 @@ import java.util.Optional;
 public class DataSchedulerService {
 
     private final RemoteCsvExtractor remoteCsvExtractor;
-    private final DataRetrieverService dataRetrieverService;
     private final LocalGraphsService localGraphsService;
     private final CovidGraphsGenerator covidGraphsGenerator;
 
 
     public DataSchedulerService(RemoteCsvExtractor remoteCsvExtractor,
-                                DataRetrieverService dataRetrieverService,
                                 LocalGraphsService localGraphsService,
                                 CovidGraphsGenerator covidGraphsGenerator) {
         this.remoteCsvExtractor = remoteCsvExtractor;
-        this.dataRetrieverService = dataRetrieverService;
         this.localGraphsService = localGraphsService;
         this.covidGraphsGenerator = covidGraphsGenerator;
     }
@@ -37,23 +34,31 @@ public class DataSchedulerService {
     @Scheduled(cron = "0 10 18 * * ?", zone = "Europe/Rome")
     @Scheduled(cron = "0 15 19 * * ?", zone = "Europe/Rome")
     public void evictAndRetrieveDataIfNewData() {
-        LocalDate lastDayOfData = dataRetrieverService.retrieveNationalData().getLastDate();
-
-        if (lastDayOfData.isEqual(LocalDate.now())) {
-            // the data for the day are published within the day
-            log.warn("No needs to retrieve new data graphs since they are updated to {}.", lastDayOfData);
-            return;
-        }
-
-        LocalDate lastDayFromCsv = remoteCsvExtractor.retrieveLastDayInCsv();
-        if (lastDayOfData.isBefore(lastDayFromCsv)) {
-            log.info("There are new data, evict the old ones.");
-            dataRetrieverService.evictAllData();
-            dataRetrieverService.retrieveNationalData();
+        Optional<LocalDate> optionalLastDayOfData = remoteCsvExtractor.retrieveLastNationalData().stream()
+                .map(CsvRow::getDate).max(LocalDate::compareTo);
+        if (optionalLastDayOfData.isEmpty()) {
+            log.warn("No data has ever been retrieved since now, seems it is the first time.");
+            remoteCsvExtractor.retrieveLastNationalData();
+            remoteCsvExtractor.retrieveLastRegionalData();
         } else {
-            log.warn("There are no data till now for the current day.");
-        }
+            LocalDate lastDayOfData = optionalLastDayOfData.get();
+            if (lastDayOfData.isEqual(LocalDate.now())) {
+                // the data for the day are published within the day
+                log.warn("No needs to retrieve new data graphs since they are updated to {}.", lastDayOfData);
+                return;
+            }
 
+            LocalDate lastDayFromCsv = remoteCsvExtractor.retrieveLastDayInCsv();
+            if (lastDayOfData.isBefore(lastDayFromCsv)) {
+                log.info("There are new data, evict the old ones.");
+                remoteCsvExtractor.evictAllData();
+                remoteCsvExtractor.retrieveLastNationalData();
+                remoteCsvExtractor.retrieveLastRegionalData();
+            } else {
+                log.warn("There are no data till now for the current day.");
+            }
+
+        }
     }
 
     @Scheduled(cron = "0 55 17 * * ?", zone = "Europe/Rome")
