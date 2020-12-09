@@ -1,13 +1,13 @@
 <template>
     <div>
         <div v-if="day != null">
-            <h2>{{day | moment}}</h2>
+            <h1 class="text-capitalize">{{day | moment}}</h1>
             <graph-image v-for="u in urls" :key="u" :url="u"></graph-image>
             <p>
-                I dati provengono da <em>Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</em>
+                {{$t("data_from")}} <em>{{$t("data_source")}}</em>
             </p>
             <p>
-                Le immagini sono generate giornalmente con <em>R scripting version 3.6.2 (2019-12-12)</em>
+                {{$t("images_from")}} <em>R scripting version 3.6.2 (2019-12-12)</em>
             </p>
         </div>
         <div v-else class="spinner-border" role="status">
@@ -23,9 +23,7 @@
     import moment from 'moment';
 
     @Component({
-        components: {
-            GraphImage
-        },
+        components: {GraphImage},
         filters: {
             moment(date: string) {
                 return moment(date).format('dddd DD MMMM');
