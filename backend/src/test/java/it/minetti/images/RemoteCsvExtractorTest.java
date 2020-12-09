@@ -1,15 +1,15 @@
 package it.minetti.images;
 
+import it.minetti.config.PcmDpcProperties;
+import it.minetti.pcmdpc.CsvLocalDateFormatter;
+import it.minetti.pcmdpc.CsvRow;
 import it.minetti.pcmdpc.RemoteCsvExtractor;
-import it.minetti.pcmdpc.RemoteCsvExtractor.CsvRow;
-import it.minetti.pcmdpc.RemoteCsvExtractor.LocalDateFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -23,19 +23,18 @@ import static org.mockito.BDDMockito.given;
 class RemoteCsvExtractorTest {
 
     @Mock
+    PcmDpcProperties properties;
+
+    @Mock
     RestTemplate restTemplate;
 
     @InjectMocks
     RemoteCsvExtractor remoteCsvExtractor;
 
-    @BeforeEach
-    void setUp() {
-        ReflectionTestUtils.setField(remoteCsvExtractor, "url", "");
-    }
-
     @Test
     void testLastDay() {
         //given
+        given(properties.getNationalCsvUrl()).willReturn("");
         given(restTemplate.getForObject("", String.class)).willReturn(
                 "data,stato,ricoverati_con_sintomi,terapia_intensiva,etc\n" +
                         "2020-11-23T17:00:00,ITA,34697,3810,38507\n" +
@@ -52,13 +51,14 @@ class RemoteCsvExtractorTest {
     @Test
     void testAllData() {
         //given
+        given(properties.getNationalCsvUrl()).willReturn("");
         given(restTemplate.getForObject("", String.class)).willReturn(
                 "data,stato,ricoverati_con_sintomi,terapia_intensiva,etc\n" +
                         "2020-11-23T17:00:00,ITA,34697,3810,38507\n" +
                         "2020-11-24T17:00:00,ITA,34577,3816,38393\n");
 
         // when
-        List<CsvRow> rows = remoteCsvExtractor.retrieveLastData();
+        List<CsvRow> rows = remoteCsvExtractor.retrieveLastNationalData();
 
         // then
         assertThat(rows, is(notNullValue()));
@@ -76,7 +76,7 @@ class RemoteCsvExtractorTest {
     @Test
     void testConverter() {
         //given
-        LocalDateFormatter formatter = new LocalDateFormatter("yyyy-MM-dd'T'HH:mm:ss");
+        CsvLocalDateFormatter formatter = new CsvLocalDateFormatter("yyyy-MM-dd'T'HH:mm:ss");
 
         // when
         LocalDate date = formatter.execute("2020-11-24T17:00:00");
