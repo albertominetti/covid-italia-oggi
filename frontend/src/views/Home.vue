@@ -1,31 +1,30 @@
 <template>
     <div class="home">
         <div>
-            <h2 v-if="lastDate != null">{{lastDate | moment}}</h2>
+            <h1 v-if="lastDate != null" class="text-capitalize">{{lastDate | moment}}</h1>
             <div v-else class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">{{ $t("loading") }}...</span>
             </div>
-            <b-container fluid="fluid">
+            <b-container fluid="fluid" id="dashboard">
                 <b-row no-gutters>
                     <b-col lg="12" xl="6">
-                        <GenericChart title="Terapia intensiva" color="#9a9419" :series="inIntensiveCare"/>
+                        <GenericChart :title='$t("intensive_care")' color="#9a9419" :series="inIntensiveCare"/>
                     </b-col>
                     <b-col lg="12" xl="6">
-                        <GenericChart title="Deceduti" color="#7b1a9c" :series="newDeceased"/>
+                        <GenericChart :title='$t("deceased")' color="#7b1a9c" :series="newDeceased"/>
                     </b-col>
                 </b-row>
                 <b-row no-gutters>
                     <b-col lg="12" xl="6">
-                        <GenericChart title="Nuovi positivi" color="#c26310" :series="newPositives"/>
+                        <GenericChart :title='$t("new_postives")' color="#c26310" :series="newPositives"/>
                     </b-col>
                     <b-col lg="12" xl="6">
-                        <GenericChart title="Tamponi" color="#12a8d2" :series="newTests"/>
+                        <GenericChart :title='$t("new_tests")' color="#12a8d2" :series="newTests"/>
                     </b-col>
                 </b-row>
             </b-container>
             <p>
-                I dati provengono da <em>Presidenza del Consiglio dei Ministri - Dipartimento della Protezione
-                Civile</em>
+                {{$t("data_from")}} <em>{{$t("data_source")}}</em>
             </p>
         </div>
     </div>
@@ -39,7 +38,6 @@
 
     @Component({
         components: {GenericChart},
-
         filters: {
             moment(date: string) { // TODO move to utils
                 return moment(date).format('dddd DD MMMM');
@@ -60,7 +58,7 @@
         }
 
         public loadData() {
-            AXIOS.get("/api/data") // TODO move outside
+            AXIOS.get("/api/data/national") // TODO move outside
                 .then(response => {
                     this.lastDate = new Date(response.data.lastDate);
                     const startDate = new Date(response.data.startDate);
@@ -70,7 +68,7 @@
                     this.newTests = Home.prepareTimeSeries(startDate, response.data.newTests);
                 })
                 .catch(e => {
-                    console.log("Sorry...", e)
+                    console.log("Sorry...", e) // TODO better exception handling
                 })
         }
 
@@ -93,3 +91,11 @@
     }
 
 </script>
+
+<style>
+    @media screen and (max-width: 40em) {
+        #dashboard {
+            padding: 0;
+        }
+    }
+</style>
