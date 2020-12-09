@@ -1,14 +1,14 @@
 <template>
     <div class="about">
-        <h3>Hi, my name is <a id="me">Alberto</a>.</h3>
+        <h3>{{$t("my_name_is")}} <a id="me">Alberto</a>.</h3>
 
-        <div v-show="showPlace === 'lausanne'">
+        <div v-show="selectedPlace === 'lausanne'">
             <figure class="figure">
                 <img src="../assets/december-in-lausanne.jpg" class="figure-img img-fluid rounded" width="502px">
                 <figcaption class="figure-caption text-right">December in Lausanne.</figcaption>
             </figure>
         </div>
-        <div v-show="showPlace === 'zurich'">
+        <div v-show="selectedPlace === 'zurich'">
             <figure class="figure">
                 <img src="../assets/november-in-zurich.jpg" class="figure-img img-fluid rounded" width="502px">
                 <figcaption class="figure-caption text-right">November in Zurich.</figcaption>
@@ -25,8 +25,11 @@
     import {Vue} from 'vue-property-decorator';
 
     export default class Images extends Vue {
-        private places = ["zurich", "lausanne"];
-        private showPlace = this.places[Math.floor(Math.random() * this.places.length)]
+        private static places = ["zurich", "lausanne"];
+        private selectedPlace: string = this.randomPlace();
 
+        private randomPlace(): string {
+            return Images.places[Math.floor(Math.random() * Images.places.length)]
+        }
     }
 </script>
