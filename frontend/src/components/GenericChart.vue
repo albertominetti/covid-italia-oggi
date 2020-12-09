@@ -33,17 +33,20 @@
                     type: 'area',
                     animations: {
                         enabled: true,
-                    }, toolbar: {
+                    },
+                    toolbar: {
                         show: true,
                         autoSelected: "zoom",
                         tools: {
                             download: true, zoom: true, reset: true, selection: true,
                             zoomin: false, zoomout: false, pan: false
                         }
-                    }, zoom: {
+                    },
+                    zoom: {
                         enabled: true,
                         autoScaleYaxis: false
-                    }, dropShadow: {
+                    },
+                    dropShadow: {
                         enabled: false,
                         color: '#000',
                         top: 18,
@@ -75,7 +78,7 @@
                 colors: [color],
                 yaxis: {
                     labels: {
-                        minWidth: 40,
+                        minWidth: 1,
                         align: 'right',
                         show: true,
                         formatter: (val: number, opts?: any): string => {
