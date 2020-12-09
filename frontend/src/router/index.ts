@@ -22,6 +22,16 @@ const routes: Array<RouteConfig> = [
     path: '/images',
     name: 'Images',
     component: () => import(/* webpackChunkName: "about" */ '../views/Images.vue'),
+  },
+  {
+    path: '/region',
+    name: 'Region',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Region.vue'),
+  },
+  {
+    path: '*',
+    name: '',
+    redirect: '/'
   }
 ]
 
