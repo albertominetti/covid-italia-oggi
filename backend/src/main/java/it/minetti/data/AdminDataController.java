@@ -1,5 +1,6 @@
 package it.minetti.data;
 
+import it.minetti.pcmdpc.RemoteCsvExtractor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/admin")
 public class AdminDataController {
 
-    private final DataRetrieverService dataRetrieverService;
+    private final RemoteCsvExtractor extractor;
 
-    public AdminDataController(DataRetrieverService dataRetrieverService) {
-        this.dataRetrieverService = dataRetrieverService;
+    public AdminDataController(RemoteCsvExtractor extractor) {
+        this.extractor = extractor;
     }
-
+    
     @GetMapping(value = "/data-evict")
     public void evictApiIfNew() {
-        dataRetrieverService.evictAllData();
+        extractor.evictAllData();
     }
 
 }
