@@ -1,7 +1,7 @@
 package it.minetti.pcmdpc;
 
+import it.minetti.config.PcmDpcProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
@@ -11,13 +11,12 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class CovidCsvHealthIndicator implements HealthIndicator {
 
-    @Value("${pcm-dpc.url}") // TODO move in constructor
-    private String url;
-
     private final RestTemplate template;
+    private final String url;
 
-    public CovidCsvHealthIndicator(RestTemplate template) {
+    public CovidCsvHealthIndicator(RestTemplate template, PcmDpcProperties properties) {
         this.template = template;
+        this.url = properties.getNationalCsvUrl();
     }
 
     @Override
