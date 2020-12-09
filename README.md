@@ -1,16 +1,20 @@
 # Daily graphs on Italian Covid data
 
-The project born as a simple standalone R script to analyze and visualize the most updated Covid related data that the Italian health ministry publish daily. In March 2020 the idea was mainly forecasting using time series analysis with HoltWinters and SARIMA, and everything was running from my PC. During November 2020 some friends asked me to provide the graphs in a better usable way. So I decided to create a cloud native application that can run in the most famous hosting platform like AWS, Azure, etc.
+The project born as a simple standalone R script to analyze and visualize the most updated Covid related data that the Italian health ministry publish daily. In March 2020 the idea was mainly forecasting using time series analysis with HoltWinters ([link1](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/HoltWinters), [link2](https://grisha.org/blog/2016/01/29/triple-exponential-smoothing-forecasting/)) and SARIMA ([link](https://towardsdatascience.com/understanding-sarima-955fe217bc77)), and everything was running from my PC. During November 2020 some friends asked me to provide the graphs in a better usable way. So I decided to create a cloud native application that can run in the most famous hosting platform like AWS, Azure, etc.
 
 ## Demo
 
 The application is currently (November 2020) hosted by DigitalOcean as a Droplet, it is mainly a VPS with ssh and a great support by the platform, it includes monitoring, scaling and many complementary pluggable services. I am expecting to try other cloud providers that allow to run the app for free; it will be an interesting challenge to optimize the app till it can run on the cheapest cloud solution.
 
-[Here](http://coviddi.ddns.net) the link to the running application. The images that follows show some samples from it.
+[Here](http://covid-sentry.ddns.net) the link to the running application. The following images are screenshots.
 
-|![home](docs/coviddi-home.png)|
+|![home](docs/homepage.png)|
 |:--:| 
-| *Home page of the application* |
+| *Homepage of the application* |
+
+|![home](docs/regional.png)|
+|:--:| 
+| *Graphs by region* |
 
 
 |![intensive care national](docs/terapia_intensiva.png)|
