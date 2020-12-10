@@ -38,7 +38,7 @@
                                     <version>${project.parent.version}</version>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
-                                    <destFileName>${project.parent.build.finalName}.jar</destFileName>
+                                    <destFileName>${project.parent.artifactId}.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
