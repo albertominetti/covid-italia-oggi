@@ -18,16 +18,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Compile with Maven
-        run: mvn -B -U compile
-        
-      - name: Test
-        run: mvn -B -U test verify
+      - name: Package with Maven
+        run: mvn -B -U package
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            LICENSE.txt
-            *.jar
+            dist/target/*.jar
