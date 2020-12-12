@@ -4,8 +4,8 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import apexchart from 'vue-apexcharts/dist/vue-apexcharts';
     import moment from 'moment';
+    import apexchart, {apexDefaultLocale, apexLocales} from "@/mixins/apex-charts";
 
     @Component({
         components: {apexchart},
@@ -28,6 +28,8 @@
         private getChartOptions(title: string, color: string): ApexCharts.ApexOptions {
             return {
                 chart: {
+                    locales: apexLocales,
+                    defaultLocale: apexDefaultLocale,
                     id: title,
                     group: 'dashboard-group',
                     type: 'area',
