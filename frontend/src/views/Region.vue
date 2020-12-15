@@ -3,7 +3,7 @@
         <div>
             <h1 v-if="lastDate != null" class="text-capitalize">{{lastDate | moment}}</h1>
             <h1 v-else>
-                Seleziona la regione
+                {{$t("select_region")}}
             </h1>
             <div class="d-inline-flex p-2">
                 <b-form-select v-model="regionCode" :options="options" @change="loadData()" class="text-large"/>
