@@ -19,7 +19,7 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import GraphImage from '@/components/GraphImage.vue';
-    import {AXIOS} from "@/mixins/http-commons"; // TODO move in http-commons
+    import {httpClient} from "@/mixins/http-commons";
     import moment from 'moment';
 
     @Component({
@@ -40,7 +40,7 @@
         }
 
         public loadImageUrls() {
-            AXIOS.get(`api/images`)
+            httpClient.get(`api/images`)  // TODO use Api, not the httpClient
                 .then(response => {
                     this.day = response.data.day
                     this.urls = response.data.urls
