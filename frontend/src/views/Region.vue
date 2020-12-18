@@ -1,32 +1,32 @@
 <template>
     <div class="home">
         <div>
-            <h1 v-if="lastDate != null" class="text-capitalize">{{lastDate | moment}}</h1>
+            <h1 v-if="covidData" class="text-capitalize">{{covidData.lastDate | moment}}</h1>
             <h1 v-else>
                 {{$t("select_region")}}
             </h1>
             <div class="d-inline-flex p-2">
                 <b-form-select v-model="regionCode" :options="options" @change="loadData()" class="text-large"/>
             </div>
-            <b-container v-show="lastDate" fluid="fluid" id="dashboard">
+            <b-container v-if="covidData" fluid="fluid" id="dashboard">
                 <b-row no-gutters>
                     <b-col lg="12" xl="6">
-                        <GenericChart :title='$t("intensive_care")' color="#9a9419" :series="inIntensiveCare"/>
+                        <GenericChart :title='$t("intensive_care")' color="#9a9419" :series="covidData.inIntensiveCareTs"/>
                     </b-col>
                     <b-col lg="12" xl="6">
-                        <GenericChart :title='$t("deceased")' color="#7b1a9c" :series="newDeceased"/>
+                        <GenericChart :title='$t("deceased")' color="#7b1a9c" :series="covidData.newDeceasedTs"/>
                     </b-col>
                 </b-row>
                 <b-row no-gutters>
                     <b-col lg="12" xl="6">
-                        <GenericChart :title='$t("new_postives")' color="#c26310" :series="newPositives"/>
+                        <GenericChart :title='$t("new_postives")' color="#c26310" :series="covidData.newPositivesTs"/>
                     </b-col>
                     <b-col lg="12" xl="6">
-                        <GenericChart :title='$t("new_tests")' color="#12a8d2" :series="newTests"/>
+                        <GenericChart :title='$t("new_tests")' color="#12a8d2" :series="covidData.newTestsTs"/>
                     </b-col>
                 </b-row>
             </b-container>
-            <p v-show="lastDate">
+            <p v-if="covidData">
                 {{$t("data_from")}} <em>{{$t("data_source")}}</em>
             </p>
         </div>
@@ -35,20 +35,23 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {AXIOS} from "@/mixins/http-commons"; // TODO move in http-commons
     import moment from 'moment';
     import GenericChart from "@/components/GenericChart.vue";
+    import CovidDataApi from "@/api/CovidDataApi";
+    import CovidData from "@/api/model/CovidData";
 
     @Component({
         components: {GenericChart},
         filters: {
-            moment(date: string) { // TODO move to utils
+            moment(date: Date) { // TODO move to utils
                 return moment(date).format('dddd DD MMMM');
             }
         }
     })
-    export default class Home extends Vue {
+    export default class Region extends Vue {
         private regionCode: string | null = null;
+        private covidData: CovidData | null = null;
+
         private options = [
             {value: '01', text: 'Piemonte'},
             {value: '02', text: 'Valle d\'Aosta'},
@@ -72,47 +75,20 @@
             {value: '19', text: 'Sicilia'},
             {value: '20', text: 'Sardegna'},
         ];
-        private lastDate: Date | null = null;
 
-        private inIntensiveCare: Point[] = [];
-        private newDeceased: Point[] = [];
-        private newPositives: Point[] = [];
-        private newTests: Point[] = [];
-
-        public loadData() {
+        public async loadData() {
             if (!this.regionCode) {
                 return;
             }
-            AXIOS.get("/api/data/regions/" + this.regionCode) // TODO move outside
-                .then(response => {
-                    this.lastDate = new Date(response.data.lastDate);
-                    const startDate = new Date(response.data.startDate);
-                    this.inIntensiveCare = Home.prepareTimeSeries(startDate, response.data.inIntensiveCare);
-                    this.newDeceased = Home.prepareTimeSeries(startDate, response.data.newDeceased);
-                    this.newPositives = Home.prepareTimeSeries(startDate, response.data.newPositives);
-                    this.newTests = Home.prepareTimeSeries(startDate, response.data.newTests);
+            await CovidDataApi.getRegionalCovidData(this.regionCode)
+                .then(covidData => {
+                    this.covidData = covidData;
                 })
                 .catch(e => {
                     console.log("Sorry...", e) // TODO better exception handling
                 })
         }
 
-        private static prepareTimeSeries(firstDate: Date, rawSeries: number []): Point[] {
-            const series: Point[] = [];
-            const currDate = new Date(firstDate);
-            for (const e of rawSeries) {
-                series.push({
-                    x: currDate.getTime(), y: e
-                });
-                currDate.setDate(currDate.getDate() + 1);
-            }
-            return series;
-        }
-    }
-
-    interface Point { // TODO import the interface that belong to GenericChart.vue
-        x: number;
-        y: number;
     }
 
 </script>

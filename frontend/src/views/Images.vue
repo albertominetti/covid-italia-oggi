@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="day != null">
-            <h1 class="text-capitalize">{{day | moment}}</h1>
-            <graph-image v-for="u in urls" :key="u" :url="u"></graph-image>
+        <div v-if="covidImages">
+            <h1 class="text-capitalize">{{covidImages.day | moment}}</h1>
+            <graph-image v-for="u in covidImages.urls" :key="u" :url="u"></graph-image>
             <p>
                 {{$t("data_from")}} <em>{{$t("data_source")}}</em>
             </p>
@@ -19,34 +19,32 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import GraphImage from '@/components/GraphImage.vue';
-    import {AXIOS} from "@/mixins/http-commons"; // TODO move in http-commons
     import moment from 'moment';
+    import CovidImagesApi from "@/api/CovidImagesApi";
+    import {CovidImagesModel} from "@/api/model/CovidImages";
 
     @Component({
         components: {GraphImage},
         filters: {
-            moment(date: string) {
+            moment(date: Date) {
                 return moment(date).format('dddd DD MMMM');
             }
         }
     })
     export default class Images extends Vue {
-        private errors: string[] = []; // TODO exception handling
-        private day: string | null = null;
-        private urls: string[] | null = null;
+        private covidImages: CovidImagesModel | null = null;
 
         public created() {
             this.loadImageUrls()
         }
 
-        public loadImageUrls() {
-            AXIOS.get(`api/images`)
-                .then(response => {
-                    this.day = response.data.day
-                    this.urls = response.data.urls
+        public async loadImageUrls() {
+            await CovidImagesApi.getImages()
+                .then(covidImages => {
+                    this.covidImages = covidImages;
                 })
                 .catch(e => {
-                    this.errors.push(e)
+                    console.log("Sorry...", e)
                 })
         }
 

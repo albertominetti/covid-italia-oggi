@@ -6,7 +6,6 @@ function loadApexLocale(locale: string): any {
     for (const key of locales.keys()) {
         const matched = key.match(/([A-Za-z0-9-]+)\./i)
         if (matched && matched.length > 1 && locale === matched[1]) {
-            console.log("Found!")
             return locales(key)
         }
     }
