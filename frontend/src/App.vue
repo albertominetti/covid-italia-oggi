@@ -1,29 +1,24 @@
 <template>
   <div id="app">
-    <Push :closeOnNavigation="true" noOverlay>
-      <router-link to="/">
-        <b-icon-graph-up />
-        <span>Home</span></router-link
-      >
-      <router-link to="/region">
-        <b-icon-graph-up />
-        <span>Regions</span></router-link
-      >
-      <router-link to="/images">
-        <b-icon-image />
-        <span>Images</span></router-link
-      >
-      <router-link to="/about">
-        <b-icon-info-square />
-        <span>About</span></router-link
-      >
-    </Push>
+    <b-navbar id="navbar" type="light" variant="light">
+      <b-collapse id="collapse-area" is-nav>
+        <b-navbar-nav>
+          <b-nav-item to="/"><b-icon-house /> Home </b-nav-item>
+          <b-nav-item to="/region"> <b-icon-graph-up /> Regions</b-nav-item>
+          <b-nav-item to="/images"> <b-icon-image /> Images</b-nav-item>
+          <b-nav-item to="/about"> <b-icon-info-square /> About</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item>
+            <locale-switcher></locale-switcher>
+          </b-nav-item>
+          <b-nav-brand>
+            <img class="navbar-logo" src="./assets/covid-19.png" alt="virus" />
+          </b-nav-brand>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <main id="page-wrap">
-      <span style="font-size: 3em;" class="text-center">
-        <img src="./assets/covid-19.png" alt="virus" style="height: 1em;" />
-        &nbsp;
-        <img src="./assets/italy.png" alt="flag" style="height: 1em;" />
-      </span>
       <router-view class="mt-2" />
     </main>
   </div>
@@ -32,9 +27,10 @@
 <script lang="ts">
 import { Push } from "vue-burger-menu";
 import { Component, Vue } from "vue-property-decorator";
+import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
 
 @Component({
-  components: { Push }
+  components: { LocaleSwitcher, Push }
 })
 export default class Home extends Vue {}
 </script>
@@ -77,5 +73,8 @@ export default class Home extends Vue {}
 
 main {
   padding-top: 1pt;
+}
+.navbar-logo {
+  width: 50px;
 }
 </style>
