@@ -115,7 +115,7 @@ export default class Region extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 @media screen and (max-width: 40em) {
   #dashboard {
     padding: 0;
