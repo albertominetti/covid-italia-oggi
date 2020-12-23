@@ -25,12 +25,11 @@
 </template>
 
 <script lang="ts">
-import { Push } from "vue-burger-menu";
-import { Component, Vue } from "vue-property-decorator";
-import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
+    import {Component, Vue} from "vue-property-decorator";
+    import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
 
-@Component({
-  components: { LocaleSwitcher, Push }
+    @Component({
+  components: { LocaleSwitcher }
 })
 export default class Home extends Vue {}
 </script>

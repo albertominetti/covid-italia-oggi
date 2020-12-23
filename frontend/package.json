@@ -16,7 +16,6 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.12",
     "vue-apexcharts": "^1.6.0",
-    "vue-burger-menu": "^2.0.5",
     "vue-class-component": "^7.2.3",
     "vue-i18n": "^8.22.2",
     "vue-moment": "^4.1.0",
