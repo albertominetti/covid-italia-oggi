@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <b-navbar id="navbar" type="light" variant="light">
-      <b-collapse id="collapse-area" is-nav>
+    <b-navbar id="navbar" type="light" variant="light" toggleable="lg">
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/"><b-icon-house /> Home </b-nav-item>
           <b-nav-item to="/region"> <b-icon-graph-up /> Regions</b-nav-item>
@@ -10,11 +11,18 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item>
-            <locale-switcher></locale-switcher>
+            <locale-switcher
+              v-model="$i18n.locale"
+              :locales="locales"
+              @change="onLocaleChanged"
+            ></locale-switcher>
           </b-nav-item>
-          <b-nav-brand>
+          <b-nav-item>
             <img class="navbar-logo" src="./assets/covid-19.png" alt="virus" />
-          </b-nav-brand>
+          </b-nav-item>
+          <b-nav-item>
+            <img class="navbar-logo" src="./assets/italy.png" alt="italy" />
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -27,33 +35,32 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
+    import {supportedLocales} from "@/i18n";
+    import moment from "moment";
 
     @Component({
   components: { LocaleSwitcher }
 })
-export default class Home extends Vue {}
+export default class App extends Vue {
+  onLocaleChanged(locale: string): void {
+    moment.locale(locale);
+  }
+
+  get locales(): { text: string; value: string }[] {
+    return Object.entries(supportedLocales).map(locale => ({
+      value: locale[0],
+      text: locale[1]
+    }));
+  }
+}
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-}
-
-.bm-menu a {
-  color: #b8b7ad;
-}
-
-.bm-menu a:focus,
-.bm-menu a:hover {
-  color: #c94e50;
-  text-decoration: none;
-}
-
-.bm-burger-button > .bm-burger-bars {
-  background-color: #777;
 }
 
 @media screen and (max-width: 40em) {
@@ -70,10 +77,7 @@ export default class Home extends Vue {}
   }
 }
 
-main {
-  padding-top: 1pt;
-}
 .navbar-logo {
-  width: 50px;
+  max-width: 40px;
 }
 </style>

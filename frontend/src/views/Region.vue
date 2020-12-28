@@ -20,15 +20,17 @@
           <b-col lg="12" xl="6">
             <GenericChart
               :title="$t('intensive_care')"
-              color="#9a9419"
               :series="covidData.inIntensiveCareTs"
+              group="region"
+              color="#9a9419"
             />
           </b-col>
           <b-col lg="12" xl="6">
             <GenericChart
               :title="$t('deceased')"
-              color="#7b1a9c"
               :series="covidData.newDeceasedTs"
+              group="region"
+              color="#7b1a9c"
             />
           </b-col>
         </b-row>
@@ -36,15 +38,17 @@
           <b-col lg="12" xl="6">
             <GenericChart
               :title="$t('new_postives')"
-              color="#c26310"
               :series="covidData.newPositivesTs"
+              group="region"
+              color="#c26310"
             />
           </b-col>
           <b-col lg="12" xl="6">
             <GenericChart
               :title="$t('new_tests')"
-              color="#12a8d2"
               :series="covidData.newTestsTs"
+              group="region"
+              color="#12a8d2"
             />
           </b-col>
         </b-row>
@@ -57,13 +61,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import moment from "moment";
-import GenericChart from "@/components/GenericChart.vue";
-import CovidDataApi from "@/api/CovidDataApi";
-import CovidData from "@/api/model/CovidData";
+    import {Component, Vue} from "vue-property-decorator";
+    import moment from "moment";
+    import GenericChart from "@/components/GenericChart.vue";
+    import CovidDataApi from "@/api/CovidDataApi";
+    import CovidData from "@/api/model/CovidData";
 
-@Component({
+    @Component({
   components: { GenericChart },
   filters: {
     moment(date: Date) {

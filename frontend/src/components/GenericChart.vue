@@ -1,32 +1,27 @@
 <template>
-  <apexchart :options="options" :series="apexSeries" type="area" />
+  <div>
+    <apexchart
+      ref="apexChart"
+      :options="options"
+      :series="apexSeries"
+      type="area"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import moment from "moment";
-import apexchart, {
-  apexDefaultLocale,
-  apexLocales
-} from "@/mixins/apex-charts";
+    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
+    import moment from "moment";
+    import apexchart, {apexDefaultLocale, apexLocales} from "@/mixins/apex-charts";
 
-@Component({
+    @Component({
   components: { apexchart }
 })
 export default class GenericChart extends Vue {
   @Prop({ required: true }) readonly title!: string;
   @Prop({ required: true }) readonly color!: string;
   @Prop({ required: true }) readonly series!: Point[];
-
-  private height = 400; // TODO useless, please review
-
-  private get options(): ApexCharts.ApexOptions {
-    return this.getChartOptions(this.title, this.color);
-  }
-
-  private get apexSeries(): ApexAxisChartSeries {
-    return [{ name: this.title, data: this.series }];
-  }
+  @Prop({ required: true }) readonly group!: string;
 
   private getChartOptions(
     title: string,
@@ -36,8 +31,10 @@ export default class GenericChart extends Vue {
       chart: {
         locales: apexLocales,
         defaultLocale: apexDefaultLocale,
-        id: title,
-        group: "dashboard-group",
+        /*id: title, TODO This prop was causing issues on locale changes
+                      (graphs was losing colors and titles were all the same)",
+                      removing this prop we lose the graph sync. Please review and fix.*/
+        group: this.group,
         type: "area",
         animations: {
           enabled: true
@@ -166,6 +163,23 @@ export default class GenericChart extends Vue {
 
   private groupingFormatter(val: number): string {
     return val.toLocaleString(undefined, { useGrouping: true });
+  }
+
+  private get options(): ApexCharts.ApexOptions {
+    return this.getChartOptions(this.title, this.color);
+  }
+
+  private get apexSeries(): ApexAxisChartSeries {
+    return [{ name: this.title, data: this.series }];
+  }
+
+  get apexChartInstance(): Vue & ApexCharts {
+    return this.$refs.apexChart as Vue & ApexCharts;
+  }
+
+  @Watch("$i18n.locale")
+  async onI18nLocaleChanges(locale: string) {
+    this.apexChartInstance.setLocale(locale);
   }
 }
 
