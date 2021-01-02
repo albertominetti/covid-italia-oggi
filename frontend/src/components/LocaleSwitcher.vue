@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item-dropdown id="my-nav-dropdown" :text="value.toUpperCase()">
+  <b-nav-item-dropdown right :text="value.toUpperCase()">
     <b-dropdown-item
       v-for="(locale, index) in locales"
       :key="index"
@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import LangFlag from "vue-lang-code-flags";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import LangFlag from "vue-lang-code-flags";
 
-    @Component({ components: { LangFlag } })
+@Component({ components: { LangFlag } })
 export default class LocaleSwitcher extends Vue {
   @Prop({ required: true }) locales!: { text: string; value: string }[];
   @Prop({ required: true }) value!: string;

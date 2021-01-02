@@ -10,31 +10,26 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import moment from "moment";
-    import apexchart, {apexDefaultLocale, apexLocales} from "@/mixins/apex-charts";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import moment from "moment";
+import apexchart, {
+  apexDefaultLocale,
+  apexLocales
+} from "@/mixins/apex-charts";
 
-    @Component({
+@Component({
   components: { apexchart }
 })
 export default class GenericChart extends Vue {
   @Prop({ required: true }) readonly title!: string;
   @Prop({ required: true }) readonly color!: string;
   @Prop({ required: true }) readonly series!: Point[];
-  @Prop({ required: true }) readonly group!: string;
 
-  private getChartOptions(
-    title: string,
-    color: string
-  ): ApexCharts.ApexOptions {
+  private getChartOptions(): ApexCharts.ApexOptions {
     return {
       chart: {
         locales: apexLocales,
         defaultLocale: apexDefaultLocale,
-        /*id: title, TODO This prop was causing issues on locale changes
-                      (graphs was losing colors and titles were all the same)",
-                      removing this prop we lose the graph sync. Please review and fix.*/
-        group: this.group,
         type: "area",
         animations: {
           enabled: true
@@ -79,13 +74,13 @@ export default class GenericChart extends Vue {
         }
       },
       title: {
-        text: title,
+        text: this.title,
         align: "center"
       },
       dataLabels: {
         enabled: false
       },
-      colors: [color],
+      colors: [this.color],
       yaxis: {
         labels: {
           minWidth: 1,
@@ -130,7 +125,7 @@ export default class GenericChart extends Vue {
       },
       fill: {
         type: "gradient",
-        colors: [color, "transparent"],
+        colors: [this.color, "transparent"],
         gradient: {
           shadeIntensity: 1,
           opacityFrom: 0.7,
@@ -166,7 +161,7 @@ export default class GenericChart extends Vue {
   }
 
   private get options(): ApexCharts.ApexOptions {
-    return this.getChartOptions(this.title, this.color);
+    return this.getChartOptions();
   }
 
   private get apexSeries(): ApexAxisChartSeries {

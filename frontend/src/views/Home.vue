@@ -14,7 +14,6 @@
               :title="$t('intensive_care')"
               :series="covidData.inIntensiveCareTs"
               color="#9a9419"
-              group="home"
             />
           </b-col>
           <b-col lg="12" xl="6">
@@ -22,7 +21,6 @@
               :title="$t('deceased')"
               :series="covidData.newDeceasedTs"
               color="#7b1a9c"
-              group="home"
             />
           </b-col>
         </b-row>
@@ -32,7 +30,6 @@
               :title="$t('new_postives')"
               :series="covidData.newPositivesTs"
               color="#c26310"
-              group="home"
             />
           </b-col>
           <b-col lg="12" xl="6">
@@ -40,7 +37,6 @@
               :title="$t('new_tests')"
               :series="covidData.newTestsTs"
               color="#12a8d2"
-              group="home"
             />
           </b-col>
         </b-row>
@@ -53,13 +49,13 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import moment from "moment";
-    import GenericChart from "@/components/GenericChart.vue";
-    import CovidDataApi from "@/api/CovidDataApi";
-    import CovidData from "@/api/model/CovidData";
+import { Component, Vue } from "vue-property-decorator";
+import moment from "moment";
+import GenericChart from "@/components/GenericChart.vue";
+import CovidDataApi from "@/api/CovidDataApi";
+import CovidData from "@/api/model/CovidData";
 
-    @Component({
+@Component({
   components: { GenericChart },
   filters: {
     moment(date: Date) {
