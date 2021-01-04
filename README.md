@@ -4,9 +4,7 @@ The project born as a simple standalone R script to analyze and visualize the mo
 
 ## Demo
 
-The application is currently (November 2020) hosted by DigitalOcean as a Droplet, it is mainly a VPS with ssh and a great support by the platform, it includes monitoring, scaling and many complementary pluggable services. I am expecting to try other cloud providers that allow to run the app for free; it will be an interesting challenge to optimize the app till it can run on the cheapest cloud solution.
-
-[Here](http://covid-sentry.ddns.net) the link to the running application. The following images are screenshots.
+The application is currently hosted [here](http://covid-sentry.ddns.net), on a cheap VPS hosting. The following images are screenshots.
 
 |![home](docs/homepage.png)|
 |:--:| 
@@ -28,7 +26,7 @@ The application is currently (November 2020) hosted by DigitalOcean as a Droplet
 
 ### Technologies
 
-In origin was simply R, but it does not provide a production ready web server, so I decided to use Spring Boot as orchestrator for calling the R scripts, download the data, trigger the scheduled batches and serve the frontend. As frontend, I chose VueJs, because of the split between logic and template. Instead of javascript, I am using typescript that allows a cleaner syntax and compile time errors.
+At the beginning, the application consists of an R script running on my local PC, of course R does not provide a production ready web server. So I decided to use Spring Boot as orchestrator for calling the R scripts, download the data, trigger the scheduled batches and serve the frontend. As frontend, I chose VueJs, because of the separation of concerns between frontend logic and graphic template. Instead of javascript, I use typescript that allows a cleaner syntax and compile time warnings.
 
 ## Challenges and ToDo list
 
@@ -41,8 +39,8 @@ In origin was simply R, but it does not provide a production ready web server, s
     - [x] expose in https with a verified certificate
 - [x] integrate a Vue frontend with spring-boot
 - [x] generate interactive graphs with a Vue using data from the underlying API
-- [ ] localization
-- [ ] do not rely on the underlying R, the cloud platform could not provide it anymore
+- [x] localization
+- [x] if R is not available on the system, avoid the R specific features
 - [ ] automate the deployment from github to the destination server
 
 ## Run the app
@@ -53,9 +51,9 @@ You can compile and run with the following command
 mvn clean package && java -jar dist/target/*.jar
 ```
 
-To generate the graphs with R you need to query the endpoint [/admin/run](http://localhost:8080/admin/run), then you can see the generated graphs at [/view-graphs](http://localhost:8080/view-graphs).
+The webapp is available at [localhost:8080](http://localhost:8080).
 
-> :warning: A better gui with interactive graphs is still under development.
+To generate the images with R you need to query the endpoint [/admin/generate-images](http://localhost:8080/admin/generate-images).
 
 ## Installation details
 
@@ -64,4 +62,4 @@ To generate the graphs with R you need to query the endpoint [/admin/run](http:/
 
 ## Credits
 
-* Icons made by [Freekpik](https://www.flaticon.com/authors/freepik)
+* Icons made by [Freepik](https://www.flaticon.com/authors/freepik)

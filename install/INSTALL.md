@@ -9,11 +9,10 @@ The spring-boot application need to run in a server with `R` available, this is 
 
 The following part will cover the installation of `R`, `Nginx` and `letsencrypt` using a standard `Ubuntu` server. You can install on other distro using a different package installer, like `yum` for CentOS.
 
-First of all, update your system. This step is not a requirement, but it is a good practice.
+First, update your system. This step is not a requirement, but it is a good practice.
 
 ```
 sudo apt-get -y update
-sudo apt-get -y upgrade
 ```
 
 ### Install `R`
@@ -21,7 +20,7 @@ sudo apt-get -y upgrade
 You can install R, and check the version. While writing this document the latest version is the `3.6.2`:
 
 ```
-sudo apt-get -y install R
+sudo apt-get -y install r-base r-cran-ggplot2
 which R
 R --version
 ```
@@ -49,13 +48,13 @@ sudo service nginx start
 
 We can now configure the nginx that works as a reverse proxy and enable the SSL connectivity without any change to the application itself.
 
-First of all we need a valid certificate; for development purpose you can generate it a self-signed one with openssl in the following way:
+First, we need a valid certificate; for development purpose you can generate it a self-signed one with openssl in the following way:
 
 ```
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'
 ```
 
-For production purpose yo probably need a certificate issued by an authority, here the simple command you have to run on the production server. It is mandatory to run on the production server after the dns configuration because the authority validates it doing a request to the port 80, and it expects that certbot is listening on that port.
+For production purpose you probably need a certificate issued by an authority, here the simple command you have to run on the production server. It is mandatory to run on the production server after the dns configuration because the authority validates it doing a request to the port 80, and it expects that certbot is listening on that port.
 
 ```
 sudo letsencrypt certonly --standalone -d example.org -d www.example.org
@@ -72,6 +71,7 @@ server {
     ssl_stapling on;
     ssl_stapling_verify on;
     add_header Strict-Transport-Security "max-age=31536000";
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     
     location /swagger-ui/ {
         auth_basic "Authentication required";
@@ -148,7 +148,7 @@ systemctl enable app
 service app start
 ```
 
-### Logging in linux environment
+## Logging in linux environment
 
 There are several tools that are quite useful for logging purposes and to maintain the Spring application as simple as possible. One of these is rsyslogd that allows to log the messages caught by syslog in a file. To achieve this behavior you need a new file like `/etc/rsyslog.d/60-app.conf` with the following content.
 
@@ -189,11 +189,14 @@ For log rotation we can use `logrotate` with the following settings in a new fil
 }
 ```
 
-You can check the rotation of the logs using `logrotate -d /etc/logrotate.d/app` or you can force with `logrotate -d /etc/logrotate.d/app`.
+You can check the rotation of the logs using `logrotate -d /etc/logrotate.d/app` or you can force with `logrotate -f /etc/logrotate.d/app`.
 
-Note: if you are interested to a centralized logging solution with Spring Boot you take a look here: https://github.com/albertominetti/java-discovery
+Note: if you are interested to a centralized logging solution with Spring Boot you take a look [here](https://github.com/albertominetti/java-discovery)
 
-#### TODO papertrail
+### Logging on a remote system (papertrail)
+
+You can log to a remote system, like [Papertrail](https://papertrailapp.com/) that provides a nice user interface for search among logs collected from several sources. In this way, syslog will send the logs to a papertrail log destination, Papertrail simply store the logs in its system and allows you to search on them. Once the registration is complete, you need to create a new log destination. You get an url like this `logs9.papertrailapp.com:12345`, and you have to include at the end of `/etc/rsyslog.conf`. Follow the [link](https://documentation.solarwinds.com/en/Success_Center/papertrail/Content/kb/configuration/configuring-remote-syslog-from-unixlinux-and-bsdos-x.htm) for all the details. Do not forget to remove the trailing `& stop` line from `/etc/rsyslog.d/60-app.conf`.
+
 #### TODO tcpwrapper
 #### TODO automated deploy when new artifact on github or new push in a branch
 
