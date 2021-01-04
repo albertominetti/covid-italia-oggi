@@ -37,7 +37,7 @@ function loadLocaleMessages(): LocaleMessages {
   return messages;
 }
 
-const supportedLocales = {
+export const supportedLocales = {
   en: "English",
   it: "Italiano",
   pl: "Polski"

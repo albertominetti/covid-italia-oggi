@@ -1,9 +1,16 @@
 <template>
-  <apexchart :options="options" :series="apexSeries" type="area" />
+  <div>
+    <apexchart
+      ref="apexChart"
+      :options="options"
+      :series="apexSeries"
+      type="area"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import moment from "moment";
 import apexchart, {
   apexDefaultLocale,
@@ -18,26 +25,11 @@ export default class GenericChart extends Vue {
   @Prop({ required: true }) readonly color!: string;
   @Prop({ required: true }) readonly series!: Point[];
 
-  private height = 400; // TODO useless, please review
-
-  private get options(): ApexCharts.ApexOptions {
-    return this.getChartOptions(this.title, this.color);
-  }
-
-  private get apexSeries(): ApexAxisChartSeries {
-    return [{ name: this.title, data: this.series }];
-  }
-
-  private getChartOptions(
-    title: string,
-    color: string
-  ): ApexCharts.ApexOptions {
+  private getChartOptions(): ApexCharts.ApexOptions {
     return {
       chart: {
         locales: apexLocales,
         defaultLocale: apexDefaultLocale,
-        id: title,
-        group: "dashboard-group",
         type: "area",
         animations: {
           enabled: true
@@ -82,13 +74,13 @@ export default class GenericChart extends Vue {
         }
       },
       title: {
-        text: title,
+        text: this.title,
         align: "center"
       },
       dataLabels: {
         enabled: false
       },
-      colors: [color],
+      colors: [this.color],
       yaxis: {
         labels: {
           minWidth: 1,
@@ -133,7 +125,7 @@ export default class GenericChart extends Vue {
       },
       fill: {
         type: "gradient",
-        colors: [color, "transparent"],
+        colors: [this.color, "transparent"],
         gradient: {
           shadeIntensity: 1,
           opacityFrom: 0.7,
@@ -166,6 +158,23 @@ export default class GenericChart extends Vue {
 
   private groupingFormatter(val: number): string {
     return val.toLocaleString(undefined, { useGrouping: true });
+  }
+
+  private get options(): ApexCharts.ApexOptions {
+    return this.getChartOptions();
+  }
+
+  private get apexSeries(): ApexAxisChartSeries {
+    return [{ name: this.title, data: this.series }];
+  }
+
+  get apexChartInstance(): Vue & ApexCharts {
+    return this.$refs.apexChart as Vue & ApexCharts;
+  }
+
+  @Watch("$i18n.locale")
+  async onI18nLocaleChanges(locale: string) {
+    this.apexChartInstance.setLocale(locale);
   }
 }
 
