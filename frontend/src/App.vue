@@ -1,6 +1,16 @@
 <template>
   <div id="app">
     <b-navbar id="navbar" type="light" variant="light" toggleable="lg">
+      <b-navbar-brand href="#">
+        <b-navbar-nav class="ml-auto navbar-expand">
+          <b-navbar-brand>
+            <img class="navbar-logo" src="./assets/covid-19.png" alt="virus" />
+          </b-navbar-brand>
+          <b-navbar-brand>
+            <img class="navbar-logo" src="./assets/italy.png" alt="italy" />
+          </b-navbar-brand>
+        </b-navbar-nav>
+      </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -8,24 +18,13 @@
           <b-nav-item to="/region"> <b-icon-graph-up /> Regions</b-nav-item>
           <b-nav-item to="/images"> <b-icon-image /> Images</b-nav-item>
           <b-nav-item to="/about"> <b-icon-info-square /> About</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-
-      <b-navbar-nav class="ml-auto navbar-expand order-12">
-        <b-nav-item>
           <locale-switcher
             v-model="$i18n.locale"
             :locales="locales"
             @change="onLocaleChanged"
           ></locale-switcher>
-        </b-nav-item>
-        <b-navbar-brand>
-          <img class="navbar-logo" src="./assets/covid-19.png" alt="virus" />
-        </b-navbar-brand>
-        <b-navbar-brand>
-          <img class="navbar-logo" src="./assets/italy.png" alt="italy" />
-        </b-navbar-brand>
-      </b-navbar-nav>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
     <main id="page-wrap">
       <router-view class="mt-2" />
@@ -34,12 +33,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
-import { supportedLocales } from "@/i18n";
-import moment from "moment";
+    import {Component, Vue} from "vue-property-decorator";
+    import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
+    import {supportedLocales} from "@/i18n";
+    import moment from "moment";
 
-@Component({
+    @Component({
   components: { LocaleSwitcher }
 })
 export default class App extends Vue {
