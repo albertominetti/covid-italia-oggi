@@ -26,7 +26,7 @@ public class DataApiController {
 
         long stop = System.currentTimeMillis();
         long totalTime = stop - start;
-        log.info("The retrieval of the last national data took: {}ms", totalTime);
+        log.debug("The retrieval of the last national data took: {}ms", totalTime);
         return data;
     }
 
@@ -39,7 +39,7 @@ public class DataApiController {
 
         long stop = System.currentTimeMillis();
         long totalTime = stop - start;
-        log.info("The retrieval of the last regional data took: {}ms", totalTime);
+        log.debug("The retrieval of the last regional data took: {}ms", totalTime);
         return data;
     }
 

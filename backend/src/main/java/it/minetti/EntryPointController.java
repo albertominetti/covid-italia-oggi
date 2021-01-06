@@ -14,7 +14,7 @@ public class EntryPointController {
             "{_:^(?!index\\.html|api|covid-19.png|swagger-ui|actuator).*$}"
     })
     public String forward() {
-        log.info("URL entered directly into the Browser, so we need to redirect...");
+        log.debug("URL entered directly into the Browser, so we need to redirect...");
         return "forward:/";
     }
 

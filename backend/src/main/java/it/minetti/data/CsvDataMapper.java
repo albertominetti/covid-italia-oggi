@@ -11,7 +11,7 @@ import java.util.List;
 public class CsvDataMapper {
 
     public DataModel map(List<CsvRow> rows) {
-        log.info("Mapping {} data rows...", rows.size());
+        log.debug("Mapping {} data rows...", rows.size());
         if (rows.isEmpty()) {
             throw new IllegalArgumentException("Cannot map empty rows");
         }
@@ -29,7 +29,7 @@ public class CsvDataMapper {
             previous = row;
         }
 
-        log.info("Mapped {} data rows.", rows.size());
+        log.debug("Mapped {} data rows.", rows.size());
         return dataModel;
     }
 }
