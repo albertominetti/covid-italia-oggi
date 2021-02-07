@@ -61,7 +61,7 @@ class CovidRequests extends Simulation {
     nothingFor(500.milliseconds),
     constantUsersPerSec(20).during(10.seconds),
     rampUsersPerSec(10).to(20).during(5.seconds).randomized,
-    heavisideUsers(500).during(5.seconds),
+    heavisideUsers(200).during(5.seconds),
     constantUsersPerSec(2).during(5.seconds)
   ).protocols(httpProtocol)).assertions(
     forAll.responseTime.percentile(95).lt(2000),
