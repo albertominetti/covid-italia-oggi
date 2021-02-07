@@ -2,7 +2,7 @@
   <div class="home">
     <div>
       <h1 v-if="covidData" class="text-capitalize">
-        {{ covidData.lastDate | moment }}
+        {{ covidData.lastDate | displayDate }}
       </h1>
       <h1 v-else>
         {{ $t("select_region") }}
@@ -61,13 +61,13 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import moment from "moment";
-    import GenericChart from "@/components/GenericChart.vue";
-    import CovidDataApi from "@/api/CovidDataApi";
-    import CovidData from "@/api/model/CovidData";
+import { Component, Vue } from "vue-property-decorator";
+import GenericChart from "@/components/GenericChart.vue";
+import CovidDataApi from "@/api/CovidDataApi";
+import CovidData from "@/api/model/CovidData";
+import { displayDate } from "@/mixins/utils";
 
-    @Component({
+@Component({
   components: { GenericChart },
   filters: {
     displayDate

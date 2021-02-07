@@ -2,7 +2,7 @@
   <div class="home">
     <div>
       <h1 v-if="covidData" class="text-capitalize">
-        {{ covidData.lastDate | moment }}
+        {{ covidData.lastDate | displayDate }}
       </h1>
       <div v-else class="spinner-border" role="status">
         <span class="sr-only">{{ $t("loading") }}...</span>
@@ -50,18 +50,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import moment from "moment";
 import GenericChart from "@/components/GenericChart.vue";
 import CovidDataApi from "@/api/CovidDataApi";
 import CovidData from "@/api/model/CovidData";
+import { displayDate } from "@/mixins/utils";
 
 @Component({
   components: { GenericChart },
   filters: {
-    moment(date: Date) {
-      // TODO move to utils
-      return moment(date).format("dddd DD MMMM");
-    }
+    displayDate
   }
 })
 export default class Home extends Vue {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="covidImages">
-      <h1 class="text-capitalize">{{ covidImages.day | moment }}</h1>
+      <h1 class="text-capitalize">{{ covidImages.day | displayDate }}</h1>
       <graph-image
         v-for="u in covidImages.urls"
         :key="u"
@@ -26,13 +26,12 @@ import GraphImage from "@/components/GraphImage.vue";
 import moment from "moment";
 import CovidImagesApi from "@/api/CovidImagesApi";
 import { CovidImagesModel } from "@/api/model/CovidImages";
+import { displayDate } from "@/mixins/utils";
 
 @Component({
   components: { GraphImage },
   filters: {
-    moment(date: Date) {
-      return moment(date).format("dddd DD MMMM");
-    }
+    displayDate
   }
 })
 export default class Images extends Vue {
