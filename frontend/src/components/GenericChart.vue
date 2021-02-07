@@ -16,6 +16,7 @@ import apexchart, {
   apexDefaultLocale,
   apexLocales
 } from "@/mixins/apex-charts";
+import { displayDate } from "@/mixins/utils";
 
 @Component({
   components: { apexchart }
@@ -97,7 +98,7 @@ export default class GenericChart extends Vue {
         x: {
           show: true,
           formatter(val: number, opts?: any): string {
-            return moment(val).format("ddd DD MMMM");
+            return displayDate(val);
           }
         },
         y: {

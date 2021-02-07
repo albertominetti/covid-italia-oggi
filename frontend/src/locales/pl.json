@@ -8,5 +8,6 @@
   "data_source": "Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile",
   "images_from": "Obrazy są generowane codziennie przez",
   "my_name_is": "Cześć mam na imię",
-  "select_region": "Wybierz region"
+  "select_region": "Wybierz region",
+  "api_error": "Nie można załadować danych, spróbuj ponownie."
 }
