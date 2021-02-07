@@ -1,8 +1,11 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import VueToast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
 
 Vue.use(VueRouter);
+Vue.use(VueToast);
 
 const routes: Array<RouteConfig> = [
   {

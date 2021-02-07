@@ -70,10 +70,7 @@
     @Component({
   components: { GenericChart },
   filters: {
-    moment(date: Date) {
-      // TODO move to utils
-      return moment(date).format("dddd DD MMMM");
-    }
+    displayDate
   }
 })
 export default class Region extends Vue {
@@ -108,13 +105,9 @@ export default class Region extends Vue {
     if (!this.regionCode) {
       return;
     }
-    await CovidDataApi.getRegionalCovidData(this.regionCode)
-      .then(covidData => {
-        this.covidData = covidData;
-      })
-      .catch(e => {
-        console.log("Sorry...", e); // TODO better exception handling
-      });
+    await CovidDataApi.getRegionalCovidData(this.regionCode).then(covidData => {
+      this.covidData = covidData;
+    });
   }
 }
 </script>
@@ -125,6 +118,7 @@ export default class Region extends Vue {
     padding: 0;
   }
 }
+
 .text-large {
   font-size: 30px;
 }

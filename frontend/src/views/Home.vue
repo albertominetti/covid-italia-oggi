@@ -72,13 +72,9 @@ export default class Home extends Vue {
   }
 
   async loadData() {
-    await CovidDataApi.getNationalCovidData()
-      .then(covidData => {
-        this.covidData = covidData;
-      })
-      .catch(e => {
-        console.log("Sorry...", e); // TODO better exception handling
-      });
+    await CovidDataApi.getNationalCovidData().then(covidData => {
+      this.covidData = covidData;
+    });
   }
 }
 </script>
