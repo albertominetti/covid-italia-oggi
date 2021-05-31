@@ -3,7 +3,7 @@
 
 ## Requirements
 
-The spring-boot application need to run in a server with `R` available, this is the only strict requirement. Optionally if you run in on a Virtual Private Server machine you may need to hide the application using a reverse proxy solution like `Apache` or `Nginx` and for a little more security you can expose it using https. From the technical point of view, `spring-boot` itself can run in https mode with small adjustments in the `yml` (or `properties`) configuration. In this way you can have a single microservice that holds all the code, but I prefer the separation of concerns as described below, especially when you have to deal with multiple services or with a frontend.
+The spring-boot application needs to run in a `jvm` this is the only mandatory requirement. The graph images are generated only if `R` is available in the server. Optionally if you run in on a Virtual Private Server machine you may need to hide the application using a reverse proxy solution like `Apache` or `Nginx` and for a little more security you can expose it using https. From the technical point of view, `spring-boot` itself can run in https mode with small adjustments in the `yml` (or `properties`) configuration. In this way you can have a single microservice that holds all the code, but I prefer the separation of concerns as described below, especially when you have to deal with multiple services or with a frontend.
 
 ## Installation of dependencies
 
@@ -13,6 +13,18 @@ First, update your system. This step is not a requirement, but it is a good prac
 
 ```
 sudo apt-get -y update
+```
+
+Install the latest jvm:
+
+```
+sudo apt install default-jre
+```
+
+Also curl can be useful for some automation:
+
+```
+sudo apt install curl
 ```
 
 ### Install `R`
@@ -57,7 +69,9 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -subj
 For production purpose you probably need a certificate issued by an authority, here the simple command you have to run on the production server. It is mandatory to run on the production server after the dns configuration because the authority validates it doing a request to the port 80, and it expects that certbot is listening on that port.
 
 ```
+sudo service nginx stop
 sudo letsencrypt certonly --standalone -d example.org -d www.example.org
+sudo service nginx start
 ```
 
 We can now move to the configuration of nginx in the file `/etc/nginx/sites-enabled/example.org`. The following is a sample configuration using the previously generated certificate and key, and it redirects any traffic to the unsecured port 80 to the 443 port using https.
@@ -167,6 +181,8 @@ chown syslog /var/log/app
 chgrp adm /var/log/app
 chmod 775 /var/log/app
 ```
+
+Do not forget to reload the service `service rsyslog restart`.
 
 ### Logging rotation
 
