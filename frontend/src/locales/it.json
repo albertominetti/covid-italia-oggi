@@ -9,5 +9,8 @@
   "images_from": "Le immagini sono generate giornalmente con",
   "my_name_is": "Ciao, sono",
   "select_region": "Seleziona la regione",
-  "api_error": "Impossibile recuperare i dati, per favore riprova."
+  "api_error": "Impossibile recuperare i dati, per favore riprova.",
+  "december_in_lausanne": "Dicembre a Losanna.",
+  "november_in_zurich": "Novembre a Zurigo.",
+  "view_on_github": "Guarda il progetto su"
 }

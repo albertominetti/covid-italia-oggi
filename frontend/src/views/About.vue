@@ -8,9 +8,10 @@
           src="../assets/december-in-lausanne.jpg"
           class="figure-img img-fluid rounded"
           width="502px"
+          alt="Me in Lausanne"
         />
         <figcaption class="figure-caption text-right">
-          December in Lausanne.
+          {{ $t("december_in_lausanne") }}
         </figcaption>
       </figure>
     </div>
@@ -20,15 +21,16 @@
           src="../assets/november-in-zurich.jpg"
           class="figure-img img-fluid rounded"
           width="502px"
+          alt="Me in Zurich"
         />
         <figcaption class="figure-caption text-right">
-          November in Zurich.
+          {{ $t("november_in_zurich") }}
         </figcaption>
       </figure>
     </div>
 
     <span>
-      View the whole project on
+      {{ $t("view_on_github") }}
       <a href="https://github.com/albertominetti/covid-italia-oggi">github</a>.
     </span>
   </div>
@@ -39,9 +41,9 @@ import { Vue } from "vue-property-decorator";
 
 export default class Images extends Vue {
   private static places = ["zurich", "lausanne"];
-  private selectedPlace: string = this.randomPlace();
+  private selectedPlace: string = Images.randomPlace();
 
-  private randomPlace(): string {
+  private static randomPlace(): string {
     return Images.places[Math.floor(Math.random() * Images.places.length)];
   }
 }
