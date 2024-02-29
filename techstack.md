@@ -4,22 +4,22 @@
 albertominetti/covid-italia-oggi is built on the following main stack:
 
 - [Java](https://www.java.com) – Languages
-- [Scala](http://www.scala-lang.org/) – Languages
-- [Bootstrap](http://getbootstrap.com/) – Front-End Frameworks
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
 - [R Language](http://www.r-project.org/) – Languages
+- [Scala](http://www.scala-lang.org/) – Languages
 - [TypeScript](http://www.typescriptlang.org) – Languages
-- [Spring Framework](https://spring.io/projects/spring-framework) – Frameworks (Full Stack)
-- [Babel](http://babeljs.io/) – JavaScript Compilers
-- [Logback](https://logback.qos.ch/) – Log Management
-- [guava](https://github.com/google/guava) – Java Tools
-- [Apache Camel](https://camel.apache.org/) – Platform as a Service
-- [ESLint](http://eslint.org/) – Code Review
-- [Vue.js](http://vuejs.org/) – Javascript UI Libraries
-- [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
-- [Prettier](https://prettier.io/) – Code Review
 - [ApexCharts](https://apexcharts.com/) – Charting Libraries
+- [Bootstrap](http://getbootstrap.com/) – Front-End Frameworks
+- [Spring Framework](https://spring.io/projects/spring-framework) – Frameworks (Full Stack)
+- [Vue.js](http://vuejs.org/) – Javascript UI Libraries
+- [guava](https://github.com/google/guava) – Java Tools
+- [Babel](http://babeljs.io/) – JavaScript Compilers
+- [ESLint](http://eslint.org/) – Code Review
 - [GitHub Actions](https://github.com/features/actions) – Continuous Integration
+- [Logback](https://logback.qos.ch/) – Log Management
+- [Prettier](https://prettier.io/) – Code Review
+- [Apache Camel](https://camel.apache.org/) – Platform as a Service
+- [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
 
 Full tech stack [here](/techstack.md)
 
@@ -30,22 +30,22 @@ Full tech stack [here](/techstack.md)
 albertominetti/covid-italia-oggi is built on the following main stack:
 
 - <img width='25' height='25' src='https://img.stackshare.io/service/995/K85ZWV2F.png' alt='Java'/> [Java](https://www.java.com) – Languages
-- <img width='25' height='25' src='https://img.stackshare.io/service/1012/scala.png' alt='Scala'/> [Scala](http://www.scala-lang.org/) – Languages
-- <img width='25' height='25' src='https://img.stackshare.io/service/1101/C9QJ7V3X.png' alt='Bootstrap'/> [Bootstrap](http://getbootstrap.com/) – Front-End Frameworks
 - <img width='25' height='25' src='https://img.stackshare.io/service/1209/javascript.jpeg' alt='JavaScript'/> [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/1213/r-logo.png' alt='R Language'/> [R Language](http://www.r-project.org/) – Languages
+- <img width='25' height='25' src='https://img.stackshare.io/service/1012/scala.png' alt='Scala'/> [Scala](http://www.scala-lang.org/) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/1612/bynNY5dJ.jpg' alt='TypeScript'/> [TypeScript](http://www.typescriptlang.org) – Languages
-- <img width='25' height='25' src='https://img.stackshare.io/service/2006/spring-framework-project-logo.png' alt='Spring Framework'/> [Spring Framework](https://spring.io/projects/spring-framework) – Frameworks (Full Stack)
-- <img width='25' height='25' src='https://img.stackshare.io/service/2739/-1wfGjNw.png' alt='Babel'/> [Babel](http://babeljs.io/) – JavaScript Compilers
-- <img width='25' height='25' src='https://img.stackshare.io/service/2923/05518ecaa42841e834421e9d6987b04f_400x400.png' alt='Logback'/> [Logback](https://logback.qos.ch/) – Log Management
-- <img width='25' height='25' src='https://img.stackshare.io/service/2970/wBjKn0ol.png' alt='guava'/> [guava](https://github.com/google/guava) – Java Tools
-- <img width='25' height='25' src='https://img.stackshare.io/service/3276/xWt1RFo6_400x400.jpg' alt='Apache Camel'/> [Apache Camel](https://camel.apache.org/) – Platform as a Service
-- <img width='25' height='25' src='https://img.stackshare.io/service/3337/Q4L7Jncy.jpg' alt='ESLint'/> [ESLint](http://eslint.org/) – Code Review
-- <img width='25' height='25' src='https://img.stackshare.io/service/3837/paeckCWC.png' alt='Vue.js'/> [Vue.js](http://vuejs.org/) – Javascript UI Libraries
-- <img width='25' height='25' src='https://img.stackshare.io/no-img-open-source.png' alt='axios'/> [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
-- <img width='25' height='25' src='https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg' alt='Prettier'/> [Prettier](https://prettier.io/) – Code Review
 - <img width='25' height='25' src='https://img.stackshare.io/service/10369/fYzCQZ9X_400x400.jpg' alt='ApexCharts'/> [ApexCharts](https://apexcharts.com/) – Charting Libraries
+- <img width='25' height='25' src='https://img.stackshare.io/service/1101/C9QJ7V3X.png' alt='Bootstrap'/> [Bootstrap](http://getbootstrap.com/) – Front-End Frameworks
+- <img width='25' height='25' src='https://img.stackshare.io/service/2006/spring-framework-project-logo.png' alt='Spring Framework'/> [Spring Framework](https://spring.io/projects/spring-framework) – Frameworks (Full Stack)
+- <img width='25' height='25' src='https://img.stackshare.io/service/3837/paeckCWC.png' alt='Vue.js'/> [Vue.js](http://vuejs.org/) – Javascript UI Libraries
+- <img width='25' height='25' src='https://img.stackshare.io/service/2970/wBjKn0ol.png' alt='guava'/> [guava](https://github.com/google/guava) – Java Tools
+- <img width='25' height='25' src='https://img.stackshare.io/service/2739/-1wfGjNw.png' alt='Babel'/> [Babel](http://babeljs.io/) – JavaScript Compilers
+- <img width='25' height='25' src='https://img.stackshare.io/service/3337/Q4L7Jncy.jpg' alt='ESLint'/> [ESLint](http://eslint.org/) – Code Review
 - <img width='25' height='25' src='https://img.stackshare.io/service/11563/actions.png' alt='GitHub Actions'/> [GitHub Actions](https://github.com/features/actions) – Continuous Integration
+- <img width='25' height='25' src='https://img.stackshare.io/service/2923/05518ecaa42841e834421e9d6987b04f_400x400.png' alt='Logback'/> [Logback](https://logback.qos.ch/) – Log Management
+- <img width='25' height='25' src='https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg' alt='Prettier'/> [Prettier](https://prettier.io/) – Code Review
+- <img width='25' height='25' src='https://img.stackshare.io/service/3276/xWt1RFo6_400x400.jpg' alt='Apache Camel'/> [Apache Camel](https://camel.apache.org/) – Platform as a Service
+- <img width='25' height='25' src='https://img.stackshare.io/no-img-open-source.png' alt='axios'/> [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
 
 Full tech stack [here](/techstack.md)
 
@@ -56,7 +56,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [albertominetti/covid-italia-oggi](https://github.com/albertominetti/covid-italia-oggi)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|52<br/>Tools used|01/05/24 <br/>Report generated|
+|52<br/>Tools used|02/29/24 <br/>Report generated|
 |------|------|
 </div>
 
